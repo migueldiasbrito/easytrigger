@@ -362,6 +362,7 @@ MonoBehaviour:
   _walkSpeed: 100
   _jumpSpeed: 7.5
   _groundCheckDistance: 0.1
+  _orientation: 1
   _isGrounded: 0
 --- !u!1 &887000658
 GameObject:

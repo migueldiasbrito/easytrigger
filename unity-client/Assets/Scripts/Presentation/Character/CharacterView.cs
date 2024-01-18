@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Mdb.EasyTrigger.Presentation.Character
 {
-
     public class CharacterView : MonoBehaviour
     {
         [SerializeField] private Rigidbody2D _rigidbody;
@@ -12,6 +11,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
         [SerializeField] private float _walkSpeed = 100f;
         [SerializeField] private float _jumpSpeed = 7.5f;
         [SerializeField] private float _groundCheckDistance = 0.1f;
+        [SerializeField] private Orientation _orientation = Orientation.Left;
 
         private IPlatformConfig _platformConfig;
 
@@ -66,8 +66,13 @@ namespace Mdb.EasyTrigger.Presentation.Character
             _isGrounded = isGrounded;
 #endif
 
+            if (_moveDirection != 0)
+            {
+                _orientation = _moveDirection > 0 ? Orientation.Right : Orientation.Left;
+            }
+
             _animator.SetBool(AnimatorUtils.Walking, _moveDirection != 0);
-            _animator.SetBool(AnimatorUtils.LookRight, _moveDirection >= 0);
+            _animator.SetBool(AnimatorUtils.LookRight, _orientation == Orientation.Right);
             _animator.SetBool(AnimatorUtils.Falling, !isGrounded && velocity.y < -0.0f);
             _animator.SetBool(AnimatorUtils.Jumping, !isGrounded && velocity.y > 0.0f);
 
