@@ -360,6 +360,9 @@ MonoBehaviour:
   _rigidbody: {fileID: 525888629}
   _animator: {fileID: 525888628}
   _walkSpeed: 100
+  _jumpSpeed: 7.5
+  _groundCheckDistance: 0.1
+  _isGrounded: 0
 --- !u!1 &887000658
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,6 +523,21 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 58c8ec8c-1dd8-4d84-86bb-d45fbf5f6cc1
     m_ActionName: PlayerController/Move[/Keyboard/a,/Keyboard/d,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1097708281}
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: db42779e-1ccd-43b3-bd7b-1cfe2aff0624
+    m_ActionName: PlayerController/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerController
@@ -570,6 +588,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputController: {fileID: 1097708281}
   _characterController: {fileID: 887000660}
+  _platformConfig: {fileID: 11400000, guid: 06608dd55832b2b4abe9de061eec0dbe, type: 2}
 --- !u!4 &1858558403
 Transform:
   m_ObjectHideFlags: 0
@@ -596,7 +615,7 @@ GameObject:
   - component: {fileID: 2066879770}
   - component: {fileID: 2066879769}
   - component: {fileID: 2066879771}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Foreground
   m_TagString: Untagged
   m_Icon: {fileID: 0}

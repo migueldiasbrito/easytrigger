@@ -3,5 +3,6 @@
     public interface IInputListener
     {
         void OnMove(float axisValue);
+        void OnJump(bool isKeyPressed);
     }
 }

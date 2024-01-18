@@ -6,5 +6,7 @@ namespace Mdb.EasyTrigger.Presentation.Utils
     {
         public static int Walking = Animator.StringToHash("Walking");
         public static int LookRight = Animator.StringToHash("LookRight");
+        public static int Falling = Animator.StringToHash("Falling");
+        public static int Jumping = Animator.StringToHash("Jumping");
     }
 }

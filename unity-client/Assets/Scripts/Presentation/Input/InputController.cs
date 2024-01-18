@@ -15,6 +15,13 @@ namespace Mdb.EasyTrigger.Presentation.Input
             _listeners.ForEach(listener => listener.OnMove(value));
         }
 
+        public void OnJump(InputAction.CallbackContext callbackContext)
+        {
+            if (!callbackContext.performed && !callbackContext.canceled) return;
+
+            _listeners.ForEach(listener => listener.OnJump(callbackContext.performed));
+        }
+
         public void Subscribe(IInputListener listener)
         {
             if (_listeners.Contains(listener)) return;
