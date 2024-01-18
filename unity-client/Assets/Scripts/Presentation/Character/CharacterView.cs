@@ -68,8 +68,8 @@ namespace Mdb.EasyTrigger.Presentation.Character
 
             _animator.SetBool(AnimatorUtils.Walking, _moveDirection != 0);
             _animator.SetBool(AnimatorUtils.LookRight, _moveDirection >= 0);
-            _animator.SetBool(AnimatorUtils.Falling, velocity.y < -_platformConfig.JumpAnimationVelocityThreshold);
-            _animator.SetBool(AnimatorUtils.Jumping, velocity.y > _platformConfig.JumpAnimationVelocityThreshold);
+            _animator.SetBool(AnimatorUtils.Falling, !isGrounded && velocity.y < -0.0f);
+            _animator.SetBool(AnimatorUtils.Jumping, !isGrounded && velocity.y > 0.0f);
 
             _tryJump = false;
             _tryCancelJump = false;
