@@ -9,8 +9,8 @@
                     "name": "Move",
                     "type": "PassThrough",
                     "id": "58c8ec8c-1dd8-4d84-86bb-d45fbf5f6cc1",
-                    "expectedControlType": "Axis",
-                    "processors": "Normalize(min=-1,max=1)",
+                    "expectedControlType": "Digital",
+                    "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
@@ -19,6 +19,51 @@
                     "type": "Button",
                     "id": "db42779e-1ccd-43b3-bd7b-1cfe2aff0624",
                     "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "3ebe2b79-d3f8-4595-8453-8f7f7ea601a0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Target",
+                    "type": "Button",
+                    "id": "0b1e9acc-715f-4024-9111-d445dc812b95",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SelectFirstAttack",
+                    "type": "Button",
+                    "id": "fcedb7ce-7360-42bb-9180-8f933ad511f3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SelectSecondAttack",
+                    "type": "Button",
+                    "id": "26fa0b9e-25c7-4e22-b811-f98f3bfc6ffa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ScrollAttacks",
+                    "type": "PassThrough",
+                    "id": "ca5b1582-5a96-4b8b-9cef-4c1e51c026b4",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -156,6 +201,116 @@
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bdb0d6bf-115b-4208-9cd1-9bd4769a6248",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9d93c96b-2b9b-4eea-8b26-a4361ebe3d5f",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f6315368-43ac-4364-ae90-3a1cd1a4538a",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Target",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "065a0f7c-90d8-4d08-b6bd-df078a4b4e79",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Target",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1b88b618-4073-49ec-afb3-86154c3542fd",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "SelectFirstAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3f30daba-3917-46e3-b407-5e16e1539666",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "SelectSecondAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cfbd8f47-34a6-45c1-8608-56364d712c75",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "Normalize(min=-120,max=120),Invert",
+                    "groups": "Keyboard",
+                    "action": "ScrollAttacks",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Trigger [Gamepad]",
+                    "id": "129cea45-172d-4c61-b484-4cd7c56f07c3",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ScrollAttacks",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "8de375c0-2c2f-4c3d-be9c-94e9ee6f0b05",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ScrollAttacks",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "5860cc30-11b7-4d76-96b2-994873970245",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ScrollAttacks",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }

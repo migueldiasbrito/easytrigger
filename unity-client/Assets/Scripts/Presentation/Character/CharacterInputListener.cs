@@ -29,6 +29,35 @@ namespace Mdb.EasyTrigger.Presentation.Character
             }
         }
 
+        public void OnAttack()
+        {
+            _view.TryAttack();
+        }
+
+        public void OnTarget()
+        {
+            _view.TryTarget();
+        }
+
+        public void OnSelectAttack(int attackIndex)
+        {
+            _view.ChangeSelectedAttack(attackIndex);
+        }
+
+        public void OnScrollAttacks(float axisValue)
+        {
+            if (axisValue == 0) return;
+
+            if (axisValue > 0)
+            {
+                _view.SelectNextAttack();
+            }
+            else
+            {
+                _view.SelectPreviousAttack();
+            }
+        }
+
         public void Dispose()
         {
             _inputController.Unsubscribe(this);
