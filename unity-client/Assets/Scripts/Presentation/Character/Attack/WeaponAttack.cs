@@ -1,10 +1,21 @@
-﻿namespace Mdb.EasyTrigger.Presentation.Character.Attack
+﻿using Mdb.EasyTrigger.Presentation.Utils;
+using System;
+using System.Collections;
+using UnityEngine;
+
+namespace Mdb.EasyTrigger.Presentation.Character.Attack
 {
     public class WeaponAttack : CharacterAttack
     {
-        public override bool TryAttack()
+        public override int AnimationId => AnimatorUtils.Shoot;
+
+        [field: SerializeField] private float _recoil;
+
+        public override IEnumerator TryAttack(Action callback)
         {
             throw new System.NotImplementedException();
+            yield return new WaitForSeconds(_recoil);
+            callback();
         }
 
         public override bool TryTarget()

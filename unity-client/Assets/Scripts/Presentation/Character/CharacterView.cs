@@ -26,7 +26,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
         private bool _tryTarget = false;
 
         private int _selectedAttack = 0;
-        private bool _recoiling = false;
+        private bool _attacking = false;
         private bool _targeting = false;
 
 #if UNITY_EDITOR
@@ -86,16 +86,19 @@ namespace Mdb.EasyTrigger.Presentation.Character
 
             bool isGrounded = IsGrounded();
 
-            bool tryAttack = _tryAttack && !_recoiling && isGrounded;
+            bool tryAttack = _tryAttack && !_attacking && isGrounded;
             if (tryAttack)
             {
-                if (_characterAttacks[_selectedAttack].TryAttack())
+                _attacking = true;
+                StartCoroutine(_characterAttacks[_selectedAttack].TryAttack(() => _attacking = false));
+
+                if (_attacking)
                 {
-                    StartCoroutine(Recoil(_characterAttacks[_selectedAttack].Recoil));
+                    _animator.SetTrigger(_characterAttacks[_selectedAttack].AnimationId);
                 }
             }
 
-            if (!_recoiling)
+            if (!_attacking)
             {
                 velocity.x = _moveDirection * _walkSpeed * Time.fixedDeltaTime;
 
@@ -110,7 +113,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
                 }
             }
 
-            bool jump = _tryJump && !_recoiling && isGrounded;
+            bool jump = _tryJump && !_attacking && isGrounded;
             if (jump)
             {
                 velocity.y = _jumpSpeed;
@@ -153,13 +156,6 @@ namespace Mdb.EasyTrigger.Presentation.Character
             _tryCancelJump = false;
             _tryAttack = false;
             _tryTarget = false;
-        }
-
-        private IEnumerator Recoil(float recoil)
-        {
-            _recoiling = true;
-            yield return new WaitForSeconds(recoil);
-            _recoiling = false;
         }
 
         private bool IsGrounded()
