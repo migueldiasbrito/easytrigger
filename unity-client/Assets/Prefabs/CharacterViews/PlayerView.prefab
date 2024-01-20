@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f2b354b7a833bc46b579c66c9175bb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Recoil>k__BackingField: 0.5
+  _recoil: 0.5
 --- !u!1 &4991382337663307055
 GameObject:
   m_ObjectHideFlags: 0
@@ -54,6 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3599350629436738308}
   - component: {fileID: 553103297294290856}
+  - component: {fileID: 2319844124124589470}
   m_Layer: 0
   m_Name: MeleeAttack
   m_TagString: Untagged
@@ -87,7 +88,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad3e8982040aaaa46890b8ce37808f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Recoil>k__BackingField: 0.5
+  _duration: 0.5
+  _collider: {fileID: 2319844124124589470}
+--- !u!70 &2319844124124589470
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4991382337663307055}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 18.5}
+  m_Size: {x: 26, y: 36}
+  m_Direction: 0
 --- !u!1 &5960220270560351718
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,6 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 5960220270560351714}
+  _collider2D: {fileID: 5960220270560351713}
   _animator: {fileID: 5960220270560351715}
   _characterAttacks:
   - {fileID: 553103297294290856}

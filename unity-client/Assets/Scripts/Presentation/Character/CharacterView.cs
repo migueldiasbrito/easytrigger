@@ -10,6 +10,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
     public class CharacterView : MonoBehaviour
     {
         [SerializeField] private Rigidbody2D _rigidbody;
+        [SerializeField] private Collider2D _collider2D;
         [SerializeField] private Animator _animator;
         [SerializeField] private CharacterAttack[] _characterAttacks;
         [SerializeField] private float _walkSpeed = 100f;
@@ -28,6 +29,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
         private int _selectedAttack = 0;
         private bool _attacking = false;
         private bool _targeting = false;
+        private bool _isDead = false;
 
 #if UNITY_EDITOR
         [SerializeField] private bool _isGrounded;
@@ -65,23 +67,50 @@ namespace Mdb.EasyTrigger.Presentation.Character
 
         public void ChangeSelectedAttack(int attackIndex)
         {
-            if (attackIndex < 0 || attackIndex >= _characterAttacks.Length) return;
+            if (_isDead || attackIndex < 0 || attackIndex >= _characterAttacks.Length) return;
 
             _selectedAttack = attackIndex;
         }
 
         public void SelectNextAttack()
         {
+            if (_isDead) return;
+
             _selectedAttack = (_selectedAttack + 1) % _characterAttacks.Length;
         }
 
         public void SelectPreviousAttack()
         {
+            if (_isDead) return;
+
             _selectedAttack = (_selectedAttack - 1 + _characterAttacks.Length) % _characterAttacks.Length;
+        }
+
+        public void Kill(Vector2 attackOrigin)
+        {
+            if (_isDead) return;
+
+            _isDead = true;
+
+            StartCoroutine(OnKilled());
+
+            bool backAttack = _orientation == Orientation.Right && attackOrigin.x < transform.position.x
+                || _orientation == Orientation.Left && attackOrigin.x > transform.position.x;
+
+            _animator.SetTrigger(backAttack ? AnimatorUtils.BackHit : AnimatorUtils.FrontHit);
+        }
+
+        private IEnumerator OnKilled()
+        {
+            yield return new WaitUntil(IsGrounded);
+            _rigidbody.isKinematic = true;
+            _collider2D.enabled = false;
         }
 
         private void FixedUpdate()
         {
+            if (_isDead) return;
+
             Vector2 velocity = _rigidbody.velocity;
 
             bool isGrounded = IsGrounded();
