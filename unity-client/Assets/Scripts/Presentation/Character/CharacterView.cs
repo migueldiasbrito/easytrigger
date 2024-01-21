@@ -1,5 +1,6 @@
 ﻿using Mdb.EasyTrigger.Presentation.Character.Attack;
 using Mdb.EasyTrigger.Presentation.Config;
+using Mdb.EasyTrigger.Presentation.Level;
 using Mdb.EasyTrigger.Presentation.Utils;
 using System;
 using System.Collections;
@@ -19,6 +20,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
         [SerializeField] private Orientation _orientation = Orientation.Left;
 
         private IPlatformConfig _platformConfig;
+        private ILevel _level;
 
         private float _moveDirection = 0f;
         private bool _tryJump = false;
@@ -32,12 +34,14 @@ namespace Mdb.EasyTrigger.Presentation.Character
         private bool _isDead = false;
 
 #if UNITY_EDITOR
-        [SerializeField] private bool _isGrounded;
+        [SerializeField]
 #endif
+        private bool _isGrounded;
 
-        public void Setup(IPlatformConfig platformConfig)
+        public void Setup(IPlatformConfig platformConfig, ILevel level)
         {
             _platformConfig = platformConfig;
+            _level = level;
         }
 
         public void Move(float direction)
@@ -76,14 +80,28 @@ namespace Mdb.EasyTrigger.Presentation.Character
         {
             if (_isDead) return;
 
-            _selectedAttack = (_selectedAttack + 1) % _characterAttacks.Length;
+            if (_targeting)
+            {
+                //_characterAttacks[_selectedAttack].SelectNextTarget();
+            }
+            else
+            {
+                _selectedAttack = (_selectedAttack + 1) % _characterAttacks.Length;
+            }
         }
 
         public void SelectPreviousAttack()
         {
             if (_isDead) return;
 
-            _selectedAttack = (_selectedAttack - 1 + _characterAttacks.Length) % _characterAttacks.Length;
+            if (_targeting)
+            {
+                //_characterAttacks[_selectedAttack].SelectPreviousTarget();
+            }
+            else
+            {
+                _selectedAttack = (_selectedAttack - 1 + _characterAttacks.Length) % _characterAttacks.Length;
+            }
         }
 
         public void Kill(Vector2 attackOrigin)
@@ -103,6 +121,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
         private IEnumerator OnKilled()
         {
             yield return new WaitUntil(IsGrounded);
+            _rigidbody.velocity = Vector2.zero;
             _rigidbody.isKinematic = true;
             _collider2D.enabled = false;
         }
@@ -111,22 +130,29 @@ namespace Mdb.EasyTrigger.Presentation.Character
         {
             if (_isDead) return;
 
+            HandleInput();
+        }
+
+        private void HandleInput()
+        {
             Vector2 velocity = _rigidbody.velocity;
+            _isGrounded = IsGrounded();
 
-            bool isGrounded = IsGrounded();
+            HandleAttack();
+            HandleMovement(ref velocity);
+            bool hasJumped = HandleJump(ref velocity);
+            HandleTarget(hasJumped);
 
-            bool tryAttack = _tryAttack && !_attacking && isGrounded;
-            if (tryAttack)
-            {
-                _attacking = true;
-                StartCoroutine(_characterAttacks[_selectedAttack].TryAttack(() => _attacking = false));
+            _rigidbody.velocity = velocity;
 
-                if (_attacking)
-                {
-                    _animator.SetTrigger(_characterAttacks[_selectedAttack].AnimationId);
-                }
-            }
+            _tryJump = false;
+            _tryCancelJump = false;
+            _tryAttack = false;
+            _tryTarget = false;
+        }
 
+        private void HandleMovement(ref Vector2 velocity)
+        {
             if (!_attacking)
             {
                 velocity.x = _moveDirection * _walkSpeed * Time.fixedDeltaTime;
@@ -135,23 +161,25 @@ namespace Mdb.EasyTrigger.Presentation.Character
                 {
                     _orientation = _moveDirection > 0 ? Orientation.Right : Orientation.Left;
                 }
-                else if (_targeting)
-                {
-                    _characterAttacks[_selectedAttack].CancelTarget();
-                    _targeting = false;
-                }
+            }
+            else
+            {
+                velocity.x = _characterAttacks[_selectedAttack].AttackMovementSpeed * Time.fixedDeltaTime
+                    * (_orientation == Orientation.Left ? -1 : 1);
             }
 
-            bool jump = _tryJump && !_attacking && isGrounded;
+            _animator.SetBool(AnimatorUtils.Walking, _moveDirection != 0);
+            _animator.SetBool(AnimatorUtils.LookRight, _orientation == Orientation.Right);
+        }
+
+        private bool HandleJump(ref Vector2 velocity)
+        {
+            bool hasJumped = false;
+            bool jump = _tryJump && !_attacking && _isGrounded;
             if (jump)
             {
                 velocity.y = _jumpSpeed;
-
-                if (_targeting)
-                {
-                    _characterAttacks[_selectedAttack].CancelTarget();
-                    _targeting = false;
-                }
+                hasJumped = true;
             }
             else if (_tryCancelJump)
             {
@@ -161,30 +189,53 @@ namespace Mdb.EasyTrigger.Presentation.Character
                 }
             }
 
-            bool tryTarget = _tryTarget && isGrounded && _moveDirection == 0 && !_tryJump;
-            if (tryTarget)
+            _animator.SetBool(AnimatorUtils.Falling, !_isGrounded && _rigidbody.velocity.y < -0.0f);
+            _animator.SetBool(AnimatorUtils.Jumping, !_isGrounded && _rigidbody.velocity.y > 0.0f);
+
+            return hasJumped;
+        }
+
+        private void HandleAttack()
+        {
+            bool tryAttack = _tryAttack && !_attacking && _isGrounded;
+            if (tryAttack)
             {
-                if (_characterAttacks[_selectedAttack].TryTarget())
+                _attacking = true;
+                StartCoroutine(_characterAttacks[_selectedAttack].TryAttack(() => _attacking = false));
+
+                if (_attacking)
                 {
-                    _targeting = true;
+                    _animator.SetTrigger(_characterAttacks[_selectedAttack].AttackAnimationTrigger);
                 }
             }
+        }
 
-            _rigidbody.velocity = velocity;
+        private void HandleTarget(bool hasJumped)
+        {
+            bool cancelTarget = _targeting && (_tryTarget || _moveDirection != 0 || hasJumped);
+            if (cancelTarget)
+            {
+                if (_characterAttacks[_selectedAttack].TargetAnimationTrigger != null)
+                {
+                    _animator.SetBool(_characterAttacks[_selectedAttack].TargetAnimationTrigger.Value, false);
+                }
+                _targeting = false;
+                return;
+            }
 
-#if UNITY_EDITOR
-            _isGrounded = isGrounded;
-#endif
+            bool tryTarget = _tryTarget && _isGrounded && _moveDirection == 0 && !_tryJump;
+            if (tryTarget)
+            {
+                if (_characterAttacks[_selectedAttack].CanTarget)
+                {
+                    _targeting = true;
 
-            _animator.SetBool(AnimatorUtils.Walking, _moveDirection != 0);
-            _animator.SetBool(AnimatorUtils.LookRight, _orientation == Orientation.Right);
-            _animator.SetBool(AnimatorUtils.Falling, !isGrounded && velocity.y < -0.0f);
-            _animator.SetBool(AnimatorUtils.Jumping, !isGrounded && velocity.y > 0.0f);
-            
-            _tryJump = false;
-            _tryCancelJump = false;
-            _tryAttack = false;
-            _tryTarget = false;
+                    if (_characterAttacks[_selectedAttack].TargetAnimationTrigger != null)
+                    {
+                        _animator.SetBool(_characterAttacks[_selectedAttack].TargetAnimationTrigger.Value, true);
+                    }
+                }
+            }
         }
 
         private bool IsGrounded()

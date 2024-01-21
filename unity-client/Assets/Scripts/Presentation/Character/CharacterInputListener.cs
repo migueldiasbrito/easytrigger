@@ -1,5 +1,6 @@
 ﻿using Mdb.EasyTrigger.Presentation.Config;
 using Mdb.EasyTrigger.Presentation.Input;
+using Mdb.EasyTrigger.Presentation.Level;
 using System;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
 
         private IInputController _inputController;
         private IPlatformConfig _platformConfig;
+        private ILevel _level;
 
         public void OnMove(float axisValue)
         {
@@ -63,14 +65,15 @@ namespace Mdb.EasyTrigger.Presentation.Character
             _inputController.Unsubscribe(this);
         }
 
-        public void Setup(IInputController inputController, IPlatformConfig platformConfig)
+        public void Setup(IInputController inputController, IPlatformConfig platformConfig, ILevel level)
         {
             _inputController = inputController;
             _platformConfig = platformConfig;
+            _level = level;
 
             _inputController.Subscribe(this);
 
-            _view.Setup(_platformConfig);
+            _view.Setup(_platformConfig, _level);
         }
     }
 }

@@ -90,6 +90,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _duration: 0.5
   _collider: {fileID: 2319844124124589470}
+  _attackMovementSpeed: 25
 --- !u!70 &2319844124124589470
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

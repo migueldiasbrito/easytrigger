@@ -6,11 +6,11 @@ namespace Mdb.EasyTrigger.Presentation.Character.Attack
 {
     public abstract class CharacterAttack : MonoBehaviour
     {
-        public abstract int AnimationId { get; }
+        public abstract int AttackAnimationTrigger { get; }
+        public abstract float AttackMovementSpeed { get; }
+        public abstract int? TargetAnimationTrigger { get; }
+        public abstract bool CanTarget { get; }
 
         public abstract IEnumerator TryAttack(Action callback);
-        public abstract bool TryTarget();
-        public abstract void CancelTarget();
-        public abstract void OnSwitchTarget();
     }
 }

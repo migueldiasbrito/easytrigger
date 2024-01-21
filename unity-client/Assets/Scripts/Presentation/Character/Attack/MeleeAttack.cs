@@ -7,10 +7,14 @@ namespace Mdb.EasyTrigger.Presentation.Character.Attack
 {
     public class MeleeAttack : CharacterAttack
     {
-        public override int AnimationId => AnimatorUtils.MeleeAttack;
+        public override int AttackAnimationTrigger => AnimatorUtils.MeleeAttack;
+        public override float AttackMovementSpeed => _attackMovementSpeed;
+        public override int? TargetAnimationTrigger => null;
+        public override bool CanTarget => false;
 
         [field: SerializeField] private float _duration;
         [SerializeField] private Collider2D _collider;
+        [SerializeField] private float _attackMovementSpeed;
 
         public override IEnumerator TryAttack(Action callback)
         {
@@ -19,15 +23,6 @@ namespace Mdb.EasyTrigger.Presentation.Character.Attack
             _collider.enabled = false;
             callback();
         }
-
-        public override bool TryTarget()
-        {
-            return false;
-        }
-
-        public override void CancelTarget() {}
-
-        public override void OnSwitchTarget() { }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

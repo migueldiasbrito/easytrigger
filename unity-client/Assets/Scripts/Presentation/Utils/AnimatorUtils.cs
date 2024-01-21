@@ -12,5 +12,6 @@ namespace Mdb.EasyTrigger.Presentation.Utils
         public static int Shoot = Animator.StringToHash("Shoot");
         public static int FrontHit = Animator.StringToHash("FrontHit");
         public static int BackHit = Animator.StringToHash("BackHit");
+        public static int Target = Animator.StringToHash("Target");
     }
 }
