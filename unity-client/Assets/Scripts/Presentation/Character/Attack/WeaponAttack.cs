@@ -12,9 +12,11 @@ namespace Mdb.EasyTrigger.Presentation.Character.Attack
         public override int? TargetAnimationTrigger => AnimatorUtils.Targeting;
         public override bool CanTarget => true;
         public override float Range => _range;
+        public override AudioClip AudioClip => _audioClip;
 
         [SerializeField] private float _recoil;
         [SerializeField] private float _range;
+        [SerializeField] private AudioClip _audioClip;
 
         public override IEnumerator TryAttack(Vector2 origin, Vector2 direction, Action callback)
         {

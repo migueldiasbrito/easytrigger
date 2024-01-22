@@ -45,6 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _recoil: 0.5
   _range: 10
+  _audioClip: {fileID: 8300000, guid: ae203429a5a07a347bd8455ca601ba58, type: 3}
 --- !u!1 &4901569748116512867
 GameObject:
   m_ObjectHideFlags: 0

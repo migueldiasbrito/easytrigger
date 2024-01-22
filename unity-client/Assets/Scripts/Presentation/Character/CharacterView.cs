@@ -247,15 +247,20 @@ namespace Mdb.EasyTrigger.Presentation.Character
                     : _orientation == Orientation.Left ? Vector2.left : Vector2.right;
                 StartCoroutine(_characterAttacks[_selectedAttack].TryAttack(Center, direction, () => _attacking = false));
 
-                if (_currentTarget != -1)
-                {
-                    _currentTarget = -1;
-                    _selectNextTarget = true;
-                }
-
                 if (_attacking)
                 {
                     _animator.SetTrigger(_characterAttacks[_selectedAttack].AttackAnimationTrigger);
+
+                    if (_currentTarget != -1 && _level.Enemies[_currentTarget].IsDead)
+                    {
+                        _currentTarget = -1;
+                        _selectNextTarget = true;
+                    }
+
+                    if (_characterAttacks[_selectedAttack].AudioClip != null)
+                    {
+                        _level.PlaySound(_characterAttacks[_selectedAttack].AudioClip);
+                    }
                 }
             }
         }

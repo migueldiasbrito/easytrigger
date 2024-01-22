@@ -13,8 +13,14 @@ namespace Mdb.EasyTrigger.Presentation.Dev
         [SerializeField] private CharacterInputListener _characterController;
         [SerializeField] private PlatformConfig _platformConfig;
         [SerializeField] private List<CharacterView> _enemies;
+        [SerializeField] private AudioSource _audioSource;
 
         public CharacterView[] Enemies => _enemies.ToArray();
+
+        public void PlaySound(AudioClip audioClip)
+        {
+            _audioSource.PlayOneShot(audioClip);
+        }
 
         private void Start()
         {

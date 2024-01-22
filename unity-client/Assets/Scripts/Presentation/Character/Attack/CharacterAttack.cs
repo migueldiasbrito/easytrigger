@@ -11,6 +11,7 @@ namespace Mdb.EasyTrigger.Presentation.Character.Attack
         public abstract int? TargetAnimationTrigger { get; }
         public abstract bool CanTarget { get; }
         public abstract float Range { get; }
+        public abstract AudioClip AudioClip { get; }
 
         public abstract IEnumerator TryAttack(Vector2 origin, Vector2 direction, Action callback);
     }

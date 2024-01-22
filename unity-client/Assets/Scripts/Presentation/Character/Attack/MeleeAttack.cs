@@ -12,6 +12,7 @@ namespace Mdb.EasyTrigger.Presentation.Character.Attack
         public override int? TargetAnimationTrigger => null;
         public override bool CanTarget => false;
         public override float Range => 0f;
+        public override AudioClip AudioClip => null;
 
         [field: SerializeField] private float _duration;
         [SerializeField] private Collider2D _collider;
