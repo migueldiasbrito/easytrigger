@@ -41,13 +41,16 @@ namespace Mdb.EasyTrigger.Presentation.Character
         private bool _tryAttack = false;
         private bool _tryTarget = false;
 
-        private int _selectedAttack = 0;
+        private int _selectedAttackIndex = 0;
         private bool _attacking = false;
         private bool _targeting = false;
-        private int _currentTarget = -1;
+        private int? _currentTargetIndex = null;
         private bool _selectNextTarget = false;
         private bool _selectPreviousTarget = false;
         private Dictionary<CharacterView, TargetingStatus> _targetStatus = new Dictionary<CharacterView, TargetingStatus>();
+
+        private CharacterAttack _selectedAttack => _characterAttacks[_selectedAttackIndex];
+        private CharacterView _currentTarget => _level.Enemies[_currentTargetIndex.Value];
 
 #if UNITY_EDITOR
         [SerializeField]
@@ -89,7 +92,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
         {
             if (IsDead || attackIndex < 0 || attackIndex >= _characterAttacks.Length) return;
 
-            _selectedAttack = attackIndex;
+            _selectedAttackIndex = attackIndex;
         }
 
         public void SelectNextAttack()
@@ -102,7 +105,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
             }
             else
             {
-                _selectedAttack = (_selectedAttack + 1) % _characterAttacks.Length;
+                _selectedAttackIndex = (_selectedAttackIndex + 1) % _characterAttacks.Length;
             }
         }
 
@@ -116,7 +119,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
             }
             else
             {
-                _selectedAttack = (_selectedAttack - 1 + _characterAttacks.Length) % _characterAttacks.Length;
+                _selectedAttackIndex = (_selectedAttackIndex - 1 + _characterAttacks.Length) % _characterAttacks.Length;
             }
         }
 
@@ -140,9 +143,9 @@ namespace Mdb.EasyTrigger.Presentation.Character
                     _level.Enemies[i].SetPlayerTargeting(this, false);
                     _level.Enemies[i].SetInRange(this, false);
 
-                    if (_currentTarget == i)
+                    if (_currentTargetIndex == i)
                     {
-                        _level.Enemies[i].SetTargeted(this, false);
+                        _currentTarget.SetTargeted(this, false);
                     }
                 }
             }
@@ -204,8 +207,8 @@ namespace Mdb.EasyTrigger.Presentation.Character
             }
             else
             {
-                velocity.x = _characterAttacks[_selectedAttack].AttackMovementSpeed * Time.fixedDeltaTime
-                    * (_orientation == Orientation.Left ? -1 : 1);
+                velocity.x = _selectedAttack.AttackMovementSpeed * Time.fixedDeltaTime *
+                    (_orientation == Orientation.Left ? -1 : 1);
             }
 
             _animator.SetBool(AnimatorUtils.Walking, _moveDirection != 0);
@@ -242,24 +245,24 @@ namespace Mdb.EasyTrigger.Presentation.Character
             {
                 _attacking = true;
 
-                Vector2 direction = _currentTarget != -1
-                    ? (_level.Enemies[_currentTarget].Center - Center).normalized
+                Vector2 direction = _currentTargetIndex != null
+                    ? (_currentTarget.Center - Center).normalized
                     : _orientation == Orientation.Left ? Vector2.left : Vector2.right;
-                StartCoroutine(_characterAttacks[_selectedAttack].TryAttack(Center, direction, () => _attacking = false));
+                StartCoroutine(_selectedAttack.TryAttack(Center, direction, () => _attacking = false));
 
                 if (_attacking)
                 {
-                    _animator.SetTrigger(_characterAttacks[_selectedAttack].AttackAnimationTrigger);
+                    _animator.SetTrigger(_selectedAttack.AttackAnimationTrigger);
 
-                    if (_currentTarget != -1 && _level.Enemies[_currentTarget].IsDead)
+                    if (_currentTargetIndex != null && _currentTarget.IsDead)
                     {
-                        _currentTarget = -1;
+                        _currentTargetIndex = null;
                         _selectNextTarget = true;
                     }
 
-                    if (_characterAttacks[_selectedAttack].AudioClip != null)
+                    if (_selectedAttack.AudioClip != null)
                     {
-                        _level.PlaySound(_characterAttacks[_selectedAttack].AudioClip);
+                        _level.PlaySound(_selectedAttack.AudioClip);
                     }
                 }
             }
@@ -272,9 +275,9 @@ namespace Mdb.EasyTrigger.Presentation.Character
 
             if (cancelTarget)
             {
-                if (_characterAttacks[_selectedAttack].TargetAnimationTrigger != null)
+                if (_selectedAttack.TargetAnimationTrigger != null)
                 {
-                    _animator.SetBool(_characterAttacks[_selectedAttack].TargetAnimationTrigger.Value, false);
+                    _animator.SetBool(_selectedAttack.TargetAnimationTrigger.Value, false);
                 }
 
                 for (int i = 0; i < _level.Enemies.Length; i++)
@@ -282,25 +285,25 @@ namespace Mdb.EasyTrigger.Presentation.Character
                     _level.Enemies[i].SetPlayerTargeting(this, false);
                     _level.Enemies[i].SetInRange(this, false);
 
-                    if (_currentTarget == i)
+                    if (_currentTargetIndex == i)
                     {
-                        _level.Enemies[_currentTarget].SetTargeted(this, false);
+                        _currentTarget.SetTargeted(this, false);
                     }
                 }
 
-                _currentTarget = -1;
+                _currentTargetIndex = null;
                 _targeting = false;
             }
             else if (tryTarget)
             {
-                if (_characterAttacks[_selectedAttack].CanTarget)
+                if (_selectedAttack.CanTarget)
                 {
                     _targeting = true;
                     _selectNextTarget = true;
 
-                    if (_characterAttacks[_selectedAttack].TargetAnimationTrigger != null)
+                    if (_selectedAttack.TargetAnimationTrigger != null)
                     {
-                        _animator.SetBool(_characterAttacks[_selectedAttack].TargetAnimationTrigger.Value, true);
+                        _animator.SetBool(_selectedAttack.TargetAnimationTrigger.Value, true);
                     }
 
                     for (int i = 0; i < _level.Enemies.Length; i++)
@@ -317,9 +320,9 @@ namespace Mdb.EasyTrigger.Presentation.Character
 
                 for (int i = 0; i < _level.Enemies.Length; i++)
                 {
-                    if (IsEnemyInTarget(_level.Enemies[i], _characterAttacks[_selectedAttack].Range))
+                    if (IsEnemyInTarget(_level.Enemies[i], _selectedAttack.Range))
                     {
-                        if (_currentTarget == i)
+                        if (_currentTargetIndex == i)
                         {
                             currentTargetIndex = enemiesInTarget.Count;
                         }
@@ -329,10 +332,10 @@ namespace Mdb.EasyTrigger.Presentation.Character
                     }
                     else
                     {
-                        if (_currentTarget == i)
+                        if (_currentTargetIndex == i)
                         {
-                            _currentTarget = -1;
-                            _level.Enemies[i].SetTargeted(this, false);
+                            _currentTarget.SetTargeted(this, false);
+                            _currentTargetIndex = null;
                         }
 
                         _level.Enemies[i].SetInRange(this, false);
@@ -350,17 +353,16 @@ namespace Mdb.EasyTrigger.Presentation.Character
                         currentTargetIndex = (currentTargetIndex - 1 + enemiesInTarget.Count) % enemiesInTarget.Count;
                     }
 
-                    if (_currentTarget != enemiesInTarget[currentTargetIndex])
+                    if (_currentTargetIndex != enemiesInTarget[currentTargetIndex])
                     {
-                        if (_currentTarget != -1)
+                        if (_currentTargetIndex != null)
                         {
-                            _level.Enemies[_currentTarget].SetTargeted(this, false);
+                            _currentTarget.SetTargeted(this, false);
                         }
-                        _currentTarget = enemiesInTarget[currentTargetIndex];
-                        _level.Enemies[_currentTarget].SetTargeted(this, true);
+                        _currentTargetIndex = enemiesInTarget[currentTargetIndex];
+                        _currentTarget.SetTargeted(this, true);
 
-                        float distanceOnXCoord = _level.Enemies[_currentTarget].transform.position.x
-                            - transform.position.x;
+                        float distanceOnXCoord = _currentTarget.transform.position.x - transform.position.x;
                         if (distanceOnXCoord != 0)
                         {
                             _orientation = distanceOnXCoord > 0 ? Orientation.Right : Orientation.Left;
