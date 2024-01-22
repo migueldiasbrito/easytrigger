@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5960220270560351716}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1723775008004799497
 MonoBehaviour:
@@ -44,6 +44,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _recoil: 0.5
+  _range: 10
+--- !u!1 &4901569748116512867
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8457703314538887765}
+  m_Layer: 0
+  m_Name: Center
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8457703314538887765
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4901569748116512867}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 18.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5960220270560351716}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4991382337663307055
 GameObject:
   m_ObjectHideFlags: 0
@@ -74,7 +105,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5960220270560351716}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &553103297294290856
 MonoBehaviour:
@@ -139,6 +170,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.02, y: 0.02, z: 1}
   m_Children:
+  - {fileID: 8457703314538887765}
   - {fileID: 3599350629436738308}
   - {fileID: 123840849059938090}
   m_Father: {fileID: 0}
@@ -157,7 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 5960220270560351714}
-  _collider2D: {fileID: 5960220270560351713}
+  _collider: {fileID: 5960220270560351713}
   _animator: {fileID: 5960220270560351715}
   _characterAttacks:
   - {fileID: 553103297294290856}
@@ -166,6 +198,7 @@ MonoBehaviour:
   _jumpSpeed: 7.5
   _groundCheckDistance: 0.1
   _orientation: 1
+  _center: {fileID: 8457703314538887765}
   _isGrounded: 0
 --- !u!212 &5960220270560351717
 SpriteRenderer:

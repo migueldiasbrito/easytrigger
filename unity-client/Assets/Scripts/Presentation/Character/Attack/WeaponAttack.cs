@@ -9,10 +9,12 @@ namespace Mdb.EasyTrigger.Presentation.Character.Attack
     {
         public override int AttackAnimationTrigger => AnimatorUtils.Shoot;
         public override float AttackMovementSpeed => 0;
-        public override int? TargetAnimationTrigger => AnimatorUtils.Target;
+        public override int? TargetAnimationTrigger => AnimatorUtils.Targeting;
         public override bool CanTarget => true;
+        public override float Range => _range;
 
-        [field: SerializeField] private float _recoil;
+        [SerializeField] private float _recoil;
+        [SerializeField] private float _range;
 
         public override IEnumerator TryAttack(Action callback)
         {

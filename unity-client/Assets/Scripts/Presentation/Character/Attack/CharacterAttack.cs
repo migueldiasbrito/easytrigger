@@ -10,6 +10,7 @@ namespace Mdb.EasyTrigger.Presentation.Character.Attack
         public abstract float AttackMovementSpeed { get; }
         public abstract int? TargetAnimationTrigger { get; }
         public abstract bool CanTarget { get; }
+        public abstract float Range { get; }
 
         public abstract IEnumerator TryAttack(Action callback);
     }

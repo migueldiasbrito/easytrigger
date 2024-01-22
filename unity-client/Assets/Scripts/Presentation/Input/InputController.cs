@@ -36,35 +36,35 @@ namespace Mdb.EasyTrigger.Presentation.Input
 
         public void OnAttack(InputAction.CallbackContext callbackContext)
         {
-            if (!callbackContext.performed && !callbackContext.canceled) return;
+            if (!callbackContext.performed) return;
 
             _listeners.ForEach(listener => listener.OnAttack());
         }
 
         public void OnTarget(InputAction.CallbackContext callbackContext)
         {
-            if (!callbackContext.performed && !callbackContext.canceled) return;
+            if (!callbackContext.performed) return;
 
             _listeners.ForEach(listener => listener.OnTarget());
         }
 
         public void OnSelectFirstAttack(InputAction.CallbackContext callbackContext)
         {
-            if (!callbackContext.performed && !callbackContext.canceled) return;
+            if (!callbackContext.performed) return;
 
             _listeners.ForEach(listener => listener.OnSelectAttack(0));
         }
 
         public void OnSelectSecondAttack(InputAction.CallbackContext callbackContext)
         {
-            if (!callbackContext.performed && !callbackContext.canceled) return;
+            if (!callbackContext.performed) return;
 
             _listeners.ForEach(listener => listener.OnSelectAttack(1));
         }
 
         public void OnScrollAttacks(InputAction.CallbackContext callbackContext)
         {
-            if (!callbackContext.performed && !callbackContext.canceled) return;
+            if (!callbackContext.performed) return;
 
             float value = callbackContext.ReadValue<float>();
 

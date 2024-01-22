@@ -11,6 +11,7 @@ namespace Mdb.EasyTrigger.Presentation.Character.Attack
         public override float AttackMovementSpeed => _attackMovementSpeed;
         public override int? TargetAnimationTrigger => null;
         public override bool CanTarget => false;
+        public override float Range => 0f;
 
         [field: SerializeField] private float _duration;
         [SerializeField] private Collider2D _collider;
