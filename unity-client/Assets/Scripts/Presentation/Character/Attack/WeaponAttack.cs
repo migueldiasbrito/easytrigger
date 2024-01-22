@@ -16,9 +16,21 @@ namespace Mdb.EasyTrigger.Presentation.Character.Attack
         [SerializeField] private float _recoil;
         [SerializeField] private float _range;
 
-        public override IEnumerator TryAttack(Action callback)
+        public override IEnumerator TryAttack(Vector2 origin, Vector2 direction, Action callback)
         {
-            throw new System.NotImplementedException();
+            RaycastHit2D[] hits = Physics2D.RaycastAll(origin, direction, _range);
+
+            for (int i = 0; i < hits.Length; i++)
+            {
+                if (hits[i].transform == transform.parent) continue;
+
+                if (hits[i].collider.TryGetComponent(out CharacterView character))
+                {
+                    character.Kill(origin);
+                    break;
+                }
+            }
+            
             yield return new WaitForSeconds(_recoil);
             callback();
         }

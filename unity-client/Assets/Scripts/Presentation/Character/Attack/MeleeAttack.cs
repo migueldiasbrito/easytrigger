@@ -17,7 +17,7 @@ namespace Mdb.EasyTrigger.Presentation.Character.Attack
         [SerializeField] private Collider2D _collider;
         [SerializeField] private float _attackMovementSpeed;
 
-        public override IEnumerator TryAttack(Action callback)
+        public override IEnumerator TryAttack(Vector2 origin, Vector2 direction, Action callback)
         {
             _collider.enabled = true;
             yield return new WaitForSeconds(_duration);

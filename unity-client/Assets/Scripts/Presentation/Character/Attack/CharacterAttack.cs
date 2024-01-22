@@ -12,6 +12,6 @@ namespace Mdb.EasyTrigger.Presentation.Character.Attack
         public abstract bool CanTarget { get; }
         public abstract float Range { get; }
 
-        public abstract IEnumerator TryAttack(Action callback);
+        public abstract IEnumerator TryAttack(Vector2 origin, Vector2 direction, Action callback);
     }
 }

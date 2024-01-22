@@ -241,7 +241,17 @@ namespace Mdb.EasyTrigger.Presentation.Character
             if (tryAttack)
             {
                 _attacking = true;
-                StartCoroutine(_characterAttacks[_selectedAttack].TryAttack(() => _attacking = false));
+
+                Vector2 direction = _currentTarget != -1
+                    ? (_level.Enemies[_currentTarget].Center - Center).normalized
+                    : _orientation == Orientation.Left ? Vector2.left : Vector2.right;
+                StartCoroutine(_characterAttacks[_selectedAttack].TryAttack(Center, direction, () => _attacking = false));
+
+                if (_currentTarget != -1)
+                {
+                    _currentTarget = -1;
+                    _selectNextTarget = true;
+                }
 
                 if (_attacking)
                 {
