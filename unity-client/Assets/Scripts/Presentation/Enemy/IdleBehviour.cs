@@ -9,6 +9,6 @@ namespace Mdb.EasyTrigger.Presentation.Enemy
             return null;
         }
 
-        public override void UpdatedPosition(Vector2 position) {}
+        public override void UpdatedPosition(Vector2 position, Vector2 comparisonTolerance) {}
     }
 }

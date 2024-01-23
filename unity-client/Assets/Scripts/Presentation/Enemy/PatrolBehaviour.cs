@@ -7,7 +7,6 @@ namespace Mdb.EasyTrigger.Presentation.Enemy
         [SerializeField] private Transform[] _path;
         [SerializeField] private bool _idleThroughPoints;
         [SerializeField] private float _idleTime;
-        [SerializeField] private float _tolerance = 0.1f;
 
         private int _currentPointIndex = 0;
         private Vector2 _currentPoint => _path[_currentPointIndex].position;
@@ -17,10 +16,10 @@ namespace Mdb.EasyTrigger.Presentation.Enemy
             return _currentPoint;
         }
 
-        public override void UpdatedPosition(Vector2 position)
+        public override void UpdatedPosition(Vector2 position, Vector2 comparisonTolerance)
         {
-            if (Mathf.Abs(_currentPoint.x - position.x) <= _tolerance
-                && Mathf.Abs(_currentPoint.y - position.y) <= _tolerance)
+            if (Mathf.Abs(_currentPoint.x - position.x) <= comparisonTolerance.x
+                && Mathf.Abs(_currentPoint.y - position.y) <= comparisonTolerance.y)
             {
                 _currentPointIndex = (_currentPointIndex + 1) % _path.Length;
             }

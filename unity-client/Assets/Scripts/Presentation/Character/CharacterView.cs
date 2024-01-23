@@ -36,6 +36,9 @@ namespace Mdb.EasyTrigger.Presentation.Character
         private IPlatformConfig _platformConfig;
         private ILevel _level;
 
+#if UNITY_EDITOR
+        [SerializeField]
+#endif
         private float _moveDirection = 0f;
         private bool _tryJump = false;
         private bool _tryCancelJump = false;
@@ -55,6 +58,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
         private CharacterView _currentTarget => _level.Enemies[_currentTargetIndex.Value];
 
 #if UNITY_EDITOR
+        [SerializeField] private Vector2 _velocity;
         [SerializeField]
 #endif
         private bool _isGrounded;
@@ -126,7 +130,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
             }
         }
 
-        internal void TryJumpDown()
+        public void TryJumpDown()
         {
             _tryJumpDown = true;
         }
@@ -170,6 +174,18 @@ namespace Mdb.EasyTrigger.Presentation.Character
             _rigidbody.isKinematic = true;
             _collider.enabled = false;
         }
+        public bool IsGrounded()
+        {
+            LayerMask groundedLayerMask = _platformConfig.GroundLayerMask;
+            if (!_jumpingDown)
+            {
+                groundedLayerMask |= _platformConfig.PlatformLayerMask;
+            }
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, _groundCheckDistance,
+                groundedLayerMask);
+            return hit.collider != null;
+        }
 
         private void FixedUpdate()
         {
@@ -190,24 +206,15 @@ namespace Mdb.EasyTrigger.Presentation.Character
             HandleTarget(hasJumped);
 
             _rigidbody.velocity = velocity;
+#if UNITY_EDITOR
+            _velocity = velocity;
+#endif
 
             _tryJump = false;
             _tryCancelJump = false;
             _tryAttack = false;
             _tryTarget = false;
             _tryJumpDown = false;
-        }
-        private bool IsGrounded()
-        {
-            LayerMask groundedLayerMask = _platformConfig.GroundLayerMask;
-            if (!_jumpingDown)
-            {
-                groundedLayerMask |= _platformConfig.PlatformLayerMask;
-            }
-
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, _groundCheckDistance,
-                groundedLayerMask);
-            return hit.collider != null;
         }
 
         private void HandleMovement(ref Vector2 velocity)

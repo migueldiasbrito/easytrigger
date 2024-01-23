@@ -13,7 +13,7 @@ namespace Mdb.EasyTrigger.Presentation.Enemy
             throw new System.NotImplementedException();
         }
 
-        public override void UpdatedPosition(Vector2 position)
+        public override void UpdatedPosition(Vector2 position, Vector2 comparisonTolerance)
         {
             throw new System.NotImplementedException();
         }

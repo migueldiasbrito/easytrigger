@@ -1,8 +1,10 @@
 ﻿using Mdb.EasyTrigger.Presentation.Character;
 using Mdb.EasyTrigger.Presentation.Config;
+using Mdb.EasyTrigger.Presentation.Enemy;
 using Mdb.EasyTrigger.Presentation.Input;
 using Mdb.EasyTrigger.Presentation.Level;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Mdb.EasyTrigger.Presentation.Dev
@@ -12,10 +14,10 @@ namespace Mdb.EasyTrigger.Presentation.Dev
         [SerializeField] private InputController _inputController;
         [SerializeField] private CharacterInputListener _characterController;
         [SerializeField] private PlatformConfig _platformConfig;
-        [SerializeField] private List<CharacterView> _enemies;
+        [SerializeField] private List<EnemyController> _enemies;
         [SerializeField] private AudioSource _audioSource;
 
-        public CharacterView[] Enemies => _enemies.ToArray();
+        public CharacterView[] Enemies => _enemies.Select(enemy => enemy.View).ToArray();
         [field: SerializeField] public Collider2D PlaftformCollider { get; private set; }
 
         public void PlaySound(AudioClip audioClip)

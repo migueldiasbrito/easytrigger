@@ -47,9 +47,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f3df4923a253949a8f28db5d096f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _view: {fileID: 2146585325709535133}
+  <View>k__BackingField: {fileID: 2146585325709535133}
   _idleBehaviour: {fileID: 6271340637399543867}
   _followBehaviour: {fileID: 6520060169382428887}
+  _positionComparisonTolerance: {x: 0.1, y: 0.2}
+  _platformToleranceDistance: 2.5
 --- !u!114 &6271340637399543867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,6 +99,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5439212953485152085}
     m_Modifications:
+    - target: {fileID: 7942790839323681355, guid: 15474ea8214332b499cd1044f949544e,
+        type: 3}
+      propertyPath: _jumpSpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7942790839323681357, guid: 15474ea8214332b499cd1044f949544e,
         type: 3}
       propertyPath: m_Name
