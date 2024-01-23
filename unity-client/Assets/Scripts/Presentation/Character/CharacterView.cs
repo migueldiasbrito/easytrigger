@@ -31,6 +31,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
         [SerializeField] private float _groundCheckDistance = 0.1f;
         [SerializeField] private Orientation _orientation = Orientation.Left;
         [SerializeField] private Transform _center;
+        [SerializeField] private float _jumpDownDuration;
 
         private IPlatformConfig _platformConfig;
         private ILevel _level;
@@ -40,6 +41,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
         private bool _tryCancelJump = false;
         private bool _tryAttack = false;
         private bool _tryTarget = false;
+        private bool _tryJumpDown = false;
 
         private int _selectedAttackIndex = 0;
         private bool _attacking = false;
@@ -56,6 +58,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
         [SerializeField]
 #endif
         private bool _isGrounded;
+        private bool _jumpingDown = false;
 
         public void Setup(IPlatformConfig platformConfig, ILevel level)
         {
@@ -123,6 +126,11 @@ namespace Mdb.EasyTrigger.Presentation.Character
             }
         }
 
+        internal void TryJumpDown()
+        {
+            _tryJumpDown = true;
+        }
+
         public void Kill(Vector2 attackOrigin)
         {
             if (IsDead) return;
@@ -178,6 +186,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
             HandleAttack();
             HandleMovement(ref velocity);
             bool hasJumped = HandleJump(ref velocity);
+            HandleJumpDown(hasJumped);
             HandleTarget(hasJumped);
 
             _rigidbody.velocity = velocity;
@@ -186,11 +195,18 @@ namespace Mdb.EasyTrigger.Presentation.Character
             _tryCancelJump = false;
             _tryAttack = false;
             _tryTarget = false;
+            _tryJumpDown = false;
         }
         private bool IsGrounded()
         {
+            LayerMask groundedLayerMask = _platformConfig.GroundLayerMask;
+            if (!_jumpingDown)
+            {
+                groundedLayerMask |= _platformConfig.PlatformLayerMask;
+            }
+
             RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, _groundCheckDistance,
-                _platformConfig.GroundLayerMask);
+                groundedLayerMask);
             return hit.collider != null;
         }
 
@@ -266,6 +282,25 @@ namespace Mdb.EasyTrigger.Presentation.Character
                     }
                 }
             }
+        }
+
+        private void HandleJumpDown(bool hasJumped)
+        {
+            bool tryJumpDown = _tryJumpDown && _isGrounded && !_attacking && !hasJumped;
+
+            if (tryJumpDown)
+            {
+                StartCoroutine(JumpingDown());
+            }
+        }
+
+        private IEnumerator JumpingDown()
+        {
+            _jumpingDown = true;
+            Physics2D.IgnoreCollision(_collider, _level.PlaftformCollider);
+            yield return new WaitForSeconds(_jumpDownDuration);
+            _jumpingDown = false;
+            Physics2D.IgnoreCollision(_collider, _level.PlaftformCollider, false);
         }
 
         private void HandleTarget(bool hasJumped)

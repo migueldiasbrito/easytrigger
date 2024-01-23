@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "JumpDown",
+                    "type": "Button",
+                    "id": "893dc4a4-8527-4670-8c16-0f7ed90b4dbe",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -216,7 +225,7 @@
                 {
                     "name": "",
                     "id": "9d93c96b-2b9b-4eea-8b26-a4361ebe3d5f",
-                    "path": "<Gamepad>/rightShoulder",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -238,7 +247,7 @@
                 {
                     "name": "",
                     "id": "065a0f7c-90d8-4d08-b6bd-df078a4b4e79",
-                    "path": "<Gamepad>/buttonWest",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -280,7 +289,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Trigger [Gamepad]",
+                    "name": "Shoulders [Gamepad]",
                     "id": "129cea45-172d-4c61-b484-4cd7c56f07c3",
                     "path": "1DAxis",
                     "interactions": "",
@@ -293,7 +302,7 @@
                 {
                     "name": "negative",
                     "id": "8de375c0-2c2f-4c3d-be9c-94e9ee6f0b05",
-                    "path": "<Gamepad>/leftTrigger",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -304,13 +313,35 @@
                 {
                     "name": "positive",
                     "id": "5860cc30-11b7-4d76-96b2-994873970245",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "ScrollAttacks",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "d704a197-3f8a-4c18-bd76-2f57ce64fd11",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "JumpDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ad26b02f-54d7-4aa8-87da-9862f1457197",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "JumpDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

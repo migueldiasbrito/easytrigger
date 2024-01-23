@@ -8,5 +8,6 @@
         void OnTarget();
         void OnSelectAttack(int attackIndex);
         void OnScrollAttacks(float axisValue);
+        void OnJumpDown();
     }
 }

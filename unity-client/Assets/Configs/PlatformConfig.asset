@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <GroundLayerMask>k__BackingField:
     serializedVersion: 2
+    m_Bits: 512
+  <PlatformLayerMask>k__BackingField:
+    serializedVersion: 2
     m_Bits: 256

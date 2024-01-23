@@ -60,6 +60,11 @@ namespace Mdb.EasyTrigger.Presentation.Character
             }
         }
 
+        public void OnJumpDown()
+        {
+            _view.TryJumpDown();
+        }
+
         public void Dispose()
         {
             _inputController.Unsubscribe(this);

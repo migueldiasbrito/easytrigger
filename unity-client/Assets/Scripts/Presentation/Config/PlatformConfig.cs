@@ -6,5 +6,7 @@ namespace Mdb.EasyTrigger.Presentation.Config
     public class PlatformConfig : ScriptableObject, IPlatformConfig
     {
         [field: SerializeField] public LayerMask GroundLayerMask { get; private set; }
+
+        [field: SerializeField] public LayerMask PlatformLayerMask { get; private set; }
     }
 }

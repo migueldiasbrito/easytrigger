@@ -70,5 +70,12 @@ namespace Mdb.EasyTrigger.Presentation.Input
 
             _listeners.ForEach(listener => listener.OnScrollAttacks(value));
         }
+
+        public void OnJumpDown(InputAction.CallbackContext callbackContext)
+        {
+            if (!callbackContext.performed) return;
+
+            _listeners.ForEach(listener => listener.OnJumpDown());
+        }
     }
 }

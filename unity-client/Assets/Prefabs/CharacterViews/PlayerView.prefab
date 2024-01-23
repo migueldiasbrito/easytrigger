@@ -200,6 +200,7 @@ MonoBehaviour:
   _groundCheckDistance: 0.1
   _orientation: 1
   _center: {fileID: 8457703314538887765}
+  _jumpDownDuration: 0.3
   _isGrounded: 0
 --- !u!212 &5960220270560351717
 SpriteRenderer:

@@ -16,6 +16,7 @@ namespace Mdb.EasyTrigger.Presentation.Dev
         [SerializeField] private AudioSource _audioSource;
 
         public CharacterView[] Enemies => _enemies.ToArray();
+        [field: SerializeField] public Collider2D PlaftformCollider { get; private set; }
 
         public void PlaySound(AudioClip audioClip)
         {
