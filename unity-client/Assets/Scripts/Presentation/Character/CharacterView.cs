@@ -25,7 +25,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
         [SerializeField] private Collider2D _collider;
         [SerializeField] private Animator _animator;
         
-        [SerializeField] private Orientation _orientation = Orientation.Left;
+        [field: SerializeField] public Orientation Orientation { get; set; } = Orientation.Left;
         [SerializeField] private float _walkSpeed = 100f;
         [SerializeField] private float _jumpSpeed = 7.5f;
         [SerializeField] private float _jumpVelocityAnimationThreshold = 2.0f;
@@ -148,8 +148,8 @@ namespace Mdb.EasyTrigger.Presentation.Character
 
             StartCoroutine(OnKilled());
 
-            bool backAttack = _orientation == Orientation.Right && attackOrigin.x < transform.position.x
-                || _orientation == Orientation.Left && attackOrigin.x > transform.position.x;
+            bool backAttack = Orientation == Orientation.Right && attackOrigin.x < transform.position.x
+                || Orientation == Orientation.Left && attackOrigin.x > transform.position.x;
 
             _animator.SetTrigger(backAttack ? AnimatorUtils.BackHit : AnimatorUtils.FrontHit);
 
@@ -234,17 +234,17 @@ namespace Mdb.EasyTrigger.Presentation.Character
 
                 if (_moveDirection != 0)
                 {
-                    _orientation = _moveDirection > 0 ? Orientation.Right : Orientation.Left;
+                    Orientation = _moveDirection > 0 ? Orientation.Right : Orientation.Left;
                 }
             }
             else
             {
                 velocity.x = _selectedAttack.AttackMovementSpeed * Time.fixedDeltaTime *
-                    (_orientation == Orientation.Left ? -1 : 1);
+                    (Orientation == Orientation.Left ? -1 : 1);
             }
 
             _animator.SetBool(AnimatorUtils.Walking, _moveDirection != 0);
-            _animator.SetBool(AnimatorUtils.LookRight, _orientation == Orientation.Right);
+            _animator.SetBool(AnimatorUtils.LookRight, Orientation == Orientation.Right);
         }
 
         private bool HandleJump(ref Vector2 velocity)
@@ -281,7 +281,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
 
                 Vector2 direction = _currentTargetIndex != null
                     ? (_currentTarget.Center - Center).normalized
-                    : _orientation == Orientation.Left ? Vector2.left : Vector2.right;
+                    : Orientation == Orientation.Left ? Vector2.left : Vector2.right;
                 StartCoroutine(_selectedAttack.TryAttack(Center, direction, () => _attacking = false));
 
                 if (_attacking)
@@ -418,7 +418,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
                         float distanceOnXCoord = _currentTarget.transform.position.x - transform.position.x;
                         if (distanceOnXCoord != 0)
                         {
-                            _orientation = distanceOnXCoord > 0 ? Orientation.Right : Orientation.Left;
+                            Orientation = distanceOnXCoord > 0 ? Orientation.Right : Orientation.Left;
                         }
                     }
                 }

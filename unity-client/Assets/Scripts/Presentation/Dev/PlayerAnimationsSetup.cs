@@ -17,6 +17,9 @@ namespace Mdb.EasyTrigger.Presentation.Dev
         [SerializeField] private List<EnemyController> _enemies;
         [SerializeField] private AudioSource _audioSource;
 
+        [SerializeField] private LayerMask _charactersLayerMask;
+
+        public CharacterView[] Players => new CharacterView[] { _characterController.View };
         public CharacterView[] Enemies => _enemies.Select(enemy => enemy.View).ToArray();
         [field: SerializeField] public Collider2D PlaftformCollider { get; private set; }
 
@@ -30,6 +33,9 @@ namespace Mdb.EasyTrigger.Presentation.Dev
             _characterController.Setup(_inputController, _platformConfig, this);
 
             _enemies.ForEach(enemie => enemie.Setup(_platformConfig, this));
+
+            int charactersLayer = _characterController.View.gameObject.layer;
+            Physics2D.IgnoreLayerCollision(charactersLayer, charactersLayer);
         }
 
         private void OnDestroy()

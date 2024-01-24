@@ -8,7 +8,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
 {
     public class CharacterInputListener : MonoBehaviour, IInputListener, IDisposable
     {
-        [SerializeField] private CharacterView _view;
+        [field: SerializeField] public CharacterView View { get; private set; }
 
         private IInputController _inputController;
         private IPlatformConfig _platformConfig;
@@ -16,34 +16,34 @@ namespace Mdb.EasyTrigger.Presentation.Character
 
         public void OnMove(float axisValue)
         {
-            _view.Move(axisValue);
+            View.Move(axisValue);
         }
 
         public void OnJump(bool isKeyPressed)
         {
             if (isKeyPressed)
             {
-                _view.TryJump();
+                View.TryJump();
             }
             else
             {
-                _view.TryCancelJump();
+                View.TryCancelJump();
             }
         }
 
         public void OnAttack()
         {
-            _view.TryAttack();
+            View.TryAttack();
         }
 
         public void OnTarget()
         {
-            _view.TryTarget();
+            View.TryTarget();
         }
 
         public void OnSelectAttack(int attackIndex)
         {
-            _view.ChangeSelectedAttack(attackIndex);
+            View.ChangeSelectedAttack(attackIndex);
         }
 
         public void OnScrollAttacks(float axisValue)
@@ -52,17 +52,17 @@ namespace Mdb.EasyTrigger.Presentation.Character
 
             if (axisValue > 0)
             {
-                _view.SelectNextAttack();
+                View.SelectNextAttack();
             }
             else
             {
-                _view.SelectPreviousAttack();
+                View.SelectPreviousAttack();
             }
         }
 
         public void OnJumpDown()
         {
-            _view.TryJumpDown();
+            View.TryJumpDown();
         }
 
         public void Dispose()
@@ -78,7 +78,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
 
             _inputController.Subscribe(this);
 
-            _view.Setup(_platformConfig, _level);
+            View.Setup(_platformConfig, _level);
         }
     }
 }

@@ -5,6 +5,7 @@ namespace Mdb.EasyTrigger.Presentation.Level
 {
     public interface ILevel
     {
+        CharacterView[] Players { get; }
         CharacterView[] Enemies { get; }
         Collider2D PlaftformCollider { get; }
         void PlaySound(AudioClip audioClip);

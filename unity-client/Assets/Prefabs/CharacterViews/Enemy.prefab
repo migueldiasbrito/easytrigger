@@ -52,6 +52,8 @@ MonoBehaviour:
   _followBehaviour: {fileID: 6520060169382428887}
   _positionComparisonTolerance: {x: 0.1, y: 0.2}
   _platformToleranceDistance: 2.5
+  _playerDetectionDistance: 5
+  _fieldOfView: 15
 --- !u!114 &6271340637399543867
 MonoBehaviour:
   m_ObjectHideFlags: 0

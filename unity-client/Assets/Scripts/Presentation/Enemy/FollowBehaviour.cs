@@ -10,12 +10,16 @@ namespace Mdb.EasyTrigger.Presentation.Enemy
 
         public override Vector2? GetNextPoint()
         {
-            throw new System.NotImplementedException();
+            if (Target != null)
+            {
+                return Target.position;
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        public override void UpdatedPosition(Vector2 position, Vector2 comparisonTolerance)
-        {
-            throw new System.NotImplementedException();
-        }
+        public override void UpdatedPosition(Vector2 position, Vector2 comparisonTolerance) { }
     }
 }
