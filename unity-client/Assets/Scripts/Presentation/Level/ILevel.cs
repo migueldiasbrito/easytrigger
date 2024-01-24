@@ -8,6 +8,6 @@ namespace Mdb.EasyTrigger.Presentation.Level
         CharacterView[] Players { get; }
         CharacterView[] Enemies { get; }
         Collider2D PlaftformCollider { get; }
-        void PlaySound(AudioClip audioClip);
+        void Shoot(Vector2 point);
     }
 }

@@ -12,7 +12,7 @@ namespace Mdb.EasyTrigger.Presentation.Character.Attack
         public override int? TargetAnimationTrigger => AnimatorUtils.Targeting;
         public override bool CanTarget => true;
         public override float Range => _range;
-        public override AudioClip AudioClip => _audioClip;
+        public override bool MakesSound => true;
 
         [SerializeField] private float _recoil;
         [SerializeField] private float _range;

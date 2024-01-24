@@ -294,9 +294,9 @@ namespace Mdb.EasyTrigger.Presentation.Character
                         _selectNextTarget = true;
                     }
 
-                    if (_selectedAttack.AudioClip != null)
+                    if (_selectedAttack.MakesSound)
                     {
-                        _level.PlaySound(_selectedAttack.AudioClip);
+                        _level.Shoot(transform.position);
                     }
                 }
             }

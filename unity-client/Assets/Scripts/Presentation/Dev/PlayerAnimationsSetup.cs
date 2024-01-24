@@ -16,6 +16,7 @@ namespace Mdb.EasyTrigger.Presentation.Dev
         [SerializeField] private PlatformConfig _platformConfig;
         [SerializeField] private List<EnemyController> _enemies;
         [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private AudioClip audioClip;
 
         [SerializeField] private LayerMask _charactersLayerMask;
 
@@ -23,9 +24,11 @@ namespace Mdb.EasyTrigger.Presentation.Dev
         public CharacterView[] Enemies => _enemies.Select(enemy => enemy.View).ToArray();
         [field: SerializeField] public Collider2D PlaftformCollider { get; private set; }
 
-        public void PlaySound(AudioClip audioClip)
+        public void Shoot(Vector2 point)
         {
             _audioSource.PlayOneShot(audioClip);
+
+            _enemies.ForEach(enemy => enemy.AddPointOfInterest(point));
         }
 
         private void Start()
