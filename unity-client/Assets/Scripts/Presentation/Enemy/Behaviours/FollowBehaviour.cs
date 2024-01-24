@@ -1,11 +1,9 @@
-﻿using Mdb.EasyTrigger.Presentation.Character.Attack;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Mdb.EasyTrigger.Presentation.Enemy
+namespace Mdb.EasyTrigger.Presentation.Enemy.Behaviours
 {
     public class FollowBehaviour : IEnemyBehaviour
     {
-        [SerializeField] private CharacterAttack _characterAttack;
         public Transform Target { get; set; }
 
         public override Vector2? GetNextPoint()

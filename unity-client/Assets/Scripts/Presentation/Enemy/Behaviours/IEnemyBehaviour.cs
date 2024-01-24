@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Mdb.EasyTrigger.Presentation.Enemy
+namespace Mdb.EasyTrigger.Presentation.Enemy.Behaviours
 {
     public abstract class IEnemyBehaviour : MonoBehaviour
     {

@@ -1,8 +1,10 @@
 ﻿using Mdb.EasyTrigger.Presentation.Character;
 using Mdb.EasyTrigger.Presentation.Character.Attack;
 using Mdb.EasyTrigger.Presentation.Config;
+using Mdb.EasyTrigger.Presentation.Enemy.Behaviours;
 using Mdb.EasyTrigger.Presentation.Level;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -22,8 +24,10 @@ namespace Mdb.EasyTrigger.Presentation.Enemy
         [field: SerializeField] public CharacterView View { get; private set; }
         [SerializeField] private IEnemyBehaviour _idleBehaviour;
         [SerializeField] private FollowBehaviour _followBehaviour;
+        [SerializeField] private InspectBehaviour _inspectBehaviour;
         [SerializeField] private Vector2 _positionComparisonTolerance = new Vector2(0.1f, 0.2f);
         [SerializeField] private float _platformToleranceDistance = 5f;
+        [SerializeField] private float _inspectTime = 10f;
 
         [SerializeField] private float _playerDetectionDistance = 10f;
         [SerializeField] private float _fieldOfView = 60f;
@@ -38,6 +42,7 @@ namespace Mdb.EasyTrigger.Presentation.Enemy
         private int _weaponAttackIndex = -1;
 
         private IEnemyBehaviour _currentBehaviour { get; set; }
+        private Coroutine _inspectCoroutine = null;
 
         public void Setup(IPlatformConfig platformConfig, ILevel level)
         {
@@ -50,6 +55,23 @@ namespace Mdb.EasyTrigger.Presentation.Enemy
             {
                 _playersAwareness.Add(player, new PlayerAwareness { SqrDistance = -1.0f });
             }
+        }
+
+        public void AddPointOfInterest(Vector2 inspectPoint)
+        {
+            if (_currentBehaviour == _followBehaviour) return;
+
+            _inspectBehaviour.Setup(inspectPoint, View.transform.position);
+            _inspectCoroutine = StartCoroutine(Inspect());
+        }
+
+        private IEnumerator Inspect()
+        {
+            _currentBehaviour = _inspectBehaviour;
+            yield return new WaitForSeconds(_inspectTime);
+
+            _currentBehaviour = _idleBehaviour;
+            _inspectBehaviour.Clear();
         }
 
         private void Start()
@@ -180,6 +202,12 @@ namespace Mdb.EasyTrigger.Presentation.Enemy
                 {
                     View.ChangeSelectedAttack(_weaponAttackIndex);
                     View.TryAttack();
+                }
+
+                if (_currentBehaviour == _inspectBehaviour)
+                {
+                    StopCoroutine(_inspectCoroutine);
+                    _inspectBehaviour.Clear();
                 }
 
                 _followBehaviour.Target = targettedPlayer.transform;

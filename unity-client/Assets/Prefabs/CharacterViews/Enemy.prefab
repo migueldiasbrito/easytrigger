@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6271340637399543867}
   - component: {fileID: 1000001094959382536}
   - component: {fileID: 6520060169382428887}
+  - component: {fileID: 130793962026346422}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -50,8 +51,10 @@ MonoBehaviour:
   <View>k__BackingField: {fileID: 2146585325709535133}
   _idleBehaviour: {fileID: 6271340637399543867}
   _followBehaviour: {fileID: 6520060169382428887}
+  _inspectBehaviour: {fileID: 130793962026346422}
   _positionComparisonTolerance: {x: 0.1, y: 0.2}
   _platformToleranceDistance: 2.5
+  _inspectTime: 10
   _playerDetectionDistance: 5
   _fieldOfView: 15
 --- !u!114 &6271340637399543867
@@ -78,9 +81,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 309862e0f18a9574fbeec2bcdd31e08b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _path: []
   _idleThroughPoints: 0
   _idleTime: 0
+  _patrolPoints: []
 --- !u!114 &6520060169382428887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,7 +96,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17baffd900b0bc54ca0407684ccec7b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _characterAttack: {fileID: 0}
+--- !u!114 &130793962026346422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830951578772024524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2386c856af8816c49bedee61e44f6794, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _idleThroughPoints: 1
+  _idleTime: 2
+  _distanceToInspectPoint: 0.5
 --- !u!1001 &8354254087988364758
 PrefabInstance:
   m_ObjectHideFlags: 0

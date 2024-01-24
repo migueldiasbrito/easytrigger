@@ -1,21 +1,23 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace Mdb.EasyTrigger.Presentation.Enemy
+namespace Mdb.EasyTrigger.Presentation.Enemy.Behaviours
 {
-    public class PatrolBehaviour : IEnemyBehaviour
+    public abstract class IPathedBehaviour : IEnemyBehaviour
     {
-        [SerializeField] private Transform[] _path;
         [SerializeField] private bool _idleThroughPoints;
         [SerializeField] private float _idleTime;
 
+        protected List<Vector2> _path = new List<Vector2>();
         private int _currentPointIndex = 0;
         private bool _idling = false;
-        private Vector2 _currentPoint => _path[_currentPointIndex].position;
+
+        private Vector2 _currentPoint => _path[_currentPointIndex];
 
         public override Vector2? GetNextPoint()
         {
-            if (_idling) return null;
+            if (_idling || _path.Count <= 0) return null;
 
             return _currentPoint;
         }
@@ -25,7 +27,7 @@ namespace Mdb.EasyTrigger.Presentation.Enemy
             if (Mathf.Abs(_currentPoint.x - position.x) <= comparisonTolerance.x
                 && Mathf.Abs(_currentPoint.y - position.y) <= comparisonTolerance.y)
             {
-                _currentPointIndex = (_currentPointIndex + 1) % _path.Length;
+                _currentPointIndex = (_currentPointIndex + 1) % _path.Count;
 
                 if (_idleThroughPoints)
                 {
