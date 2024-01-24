@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Mdb.EasyTrigger.Presentation.Enemy
 {
@@ -9,10 +10,13 @@ namespace Mdb.EasyTrigger.Presentation.Enemy
         [SerializeField] private float _idleTime;
 
         private int _currentPointIndex = 0;
+        private bool _idling = false;
         private Vector2 _currentPoint => _path[_currentPointIndex].position;
 
         public override Vector2? GetNextPoint()
         {
+            if (_idling) return null;
+
             return _currentPoint;
         }
 
@@ -22,7 +26,19 @@ namespace Mdb.EasyTrigger.Presentation.Enemy
                 && Mathf.Abs(_currentPoint.y - position.y) <= comparisonTolerance.y)
             {
                 _currentPointIndex = (_currentPointIndex + 1) % _path.Length;
+
+                if (_idleThroughPoints)
+                {
+                    StartCoroutine(Idle());
+                }
             }
+        }
+
+        private IEnumerator Idle()
+        {
+            _idling = true;
+            yield return new WaitForSeconds(_idleTime);
+            _idling = false;
         }
     }
 }

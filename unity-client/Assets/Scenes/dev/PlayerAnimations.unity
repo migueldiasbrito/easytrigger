@@ -7387,6 +7387,16 @@ PrefabInstance:
       propertyPath: _path.Array.data[3]
       value: 
       objectReference: {fileID: 1940733660}
+    - target: {fileID: 1000001094959382536, guid: 8d80693de85ab7e44934eb7f2448a077,
+        type: 3}
+      propertyPath: _idleThroughPoints
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000001094959382536, guid: 8d80693de85ab7e44934eb7f2448a077,
+        type: 3}
+      propertyPath: _idleTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2146585325709535129, guid: 8d80693de85ab7e44934eb7f2448a077,
         type: 3}
       propertyPath: m_LocalPosition.x
