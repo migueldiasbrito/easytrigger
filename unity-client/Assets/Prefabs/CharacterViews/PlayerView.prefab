@@ -215,6 +215,7 @@ MonoBehaviour:
   _duration: 0.5
   _collider: {fileID: 2319844124124589470}
   _attackMovementSpeed: 25
+  _range: 0.5
 --- !u!70 &2319844124124589470
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -290,7 +291,7 @@ MonoBehaviour:
   _jumpSpeed: 7.5
   _jumpVelocityAnimationThreshold: 2
   _jumpDownDuration: 0.3
-  _characterAttacks:
+  <CharacterAttacks>k__BackingField:
   - {fileID: 553103297294290856}
   - {fileID: 1723775008004799497}
   _center: {fileID: 8457703314538887765}

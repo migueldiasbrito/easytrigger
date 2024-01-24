@@ -31,7 +31,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
         [SerializeField] private float _jumpVelocityAnimationThreshold = 2.0f;
         [SerializeField] private float _jumpDownDuration = 0.3f;
         
-        [SerializeField] private CharacterAttack[] _characterAttacks;
+        [field: SerializeField] public CharacterAttack[] CharacterAttacks { get; set; }
         [SerializeField] private Transform _center;
 
         [SerializeField] private float _groundCheckDistance = 0.1f;
@@ -59,7 +59,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
         private bool _selectPreviousTarget = false;
         private Dictionary<CharacterView, TargetingStatus> _targetStatus = new Dictionary<CharacterView, TargetingStatus>();
 
-        private CharacterAttack _selectedAttack => _characterAttacks[_selectedAttackIndex];
+        private CharacterAttack _selectedAttack => CharacterAttacks[_selectedAttackIndex];
         private CharacterView _currentTarget => _level.Enemies[_currentTargetIndex.Value];
 
 #if UNITY_EDITOR
@@ -102,7 +102,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
 
         public void ChangeSelectedAttack(int attackIndex)
         {
-            if (IsDead || attackIndex < 0 || attackIndex >= _characterAttacks.Length) return;
+            if (IsDead || attackIndex < 0 || attackIndex >= CharacterAttacks.Length) return;
 
             _selectedAttackIndex = attackIndex;
         }
@@ -117,7 +117,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
             }
             else
             {
-                _selectedAttackIndex = (_selectedAttackIndex + 1) % _characterAttacks.Length;
+                _selectedAttackIndex = (_selectedAttackIndex + 1) % CharacterAttacks.Length;
             }
         }
 
@@ -131,7 +131,7 @@ namespace Mdb.EasyTrigger.Presentation.Character
             }
             else
             {
-                _selectedAttackIndex = (_selectedAttackIndex - 1 + _characterAttacks.Length) % _characterAttacks.Length;
+                _selectedAttackIndex = (_selectedAttackIndex - 1 + CharacterAttacks.Length) % CharacterAttacks.Length;
             }
         }
 

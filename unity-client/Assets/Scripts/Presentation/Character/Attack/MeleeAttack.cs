@@ -11,12 +11,13 @@ namespace Mdb.EasyTrigger.Presentation.Character.Attack
         public override float AttackMovementSpeed => _attackMovementSpeed;
         public override int? TargetAnimationTrigger => null;
         public override bool CanTarget => false;
-        public override float Range => 0f;
+        public override float Range => _range;
         public override AudioClip AudioClip => null;
 
         [field: SerializeField] private float _duration;
         [SerializeField] private Collider2D _collider;
         [SerializeField] private float _attackMovementSpeed;
+        [SerializeField] private float _range;
 
         public override IEnumerator TryAttack(Vector2 origin, Vector2 direction, Action callback)
         {

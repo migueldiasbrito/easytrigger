@@ -1,6 +1,8 @@
 ﻿using Mdb.EasyTrigger.Presentation.Character;
+using Mdb.EasyTrigger.Presentation.Character.Attack;
 using Mdb.EasyTrigger.Presentation.Config;
 using Mdb.EasyTrigger.Presentation.Level;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,6 +15,8 @@ namespace Mdb.EasyTrigger.Presentation.Enemy
         {
             public bool IsAware;
             public float SqrDistance;
+            public bool CanMeleeAttack;
+            public bool CanShoot;
         }
 
         [field: SerializeField] public CharacterView View { get; private set; }
@@ -29,6 +33,9 @@ namespace Mdb.EasyTrigger.Presentation.Enemy
 
         private Dictionary<CharacterView, PlayerAwareness> _playersAwareness
             = new Dictionary<CharacterView, PlayerAwareness>();
+
+        private int _meleeAttackIndex = -1;
+        private int _weaponAttackIndex = -1;
 
         private IEnemyBehaviour _currentBehaviour { get; set; }
 
@@ -48,6 +55,18 @@ namespace Mdb.EasyTrigger.Presentation.Enemy
         private void Start()
         {
             _currentBehaviour = _idleBehaviour;
+
+            for (int i = 0; i < View.CharacterAttacks.Length; i++)
+            {
+                if (View.CharacterAttacks[i] is MeleeAttack)
+                {
+                    _meleeAttackIndex = i;
+                }
+                else if (View.CharacterAttacks[i] is WeaponAttack)
+                {
+                    _weaponAttackIndex = i;
+                }
+            }
         }
 
         private void FixedUpdate()
@@ -87,40 +106,46 @@ namespace Mdb.EasyTrigger.Presentation.Enemy
                     if (playerAwareness.IsAware)
                     {
                         playerAwareness.IsAware = false;
+                        playerAwareness.CanMeleeAttack = false;
+                        playerAwareness.CanShoot = false;
                         playerAwareness.SqrDistance = -1.0f;
                     }
                 }
                 else
                 {
+                    playerAwareness.CanMeleeAttack = false;
+                    playerAwareness.CanShoot = false;
+
                     Vector2 distanceToPlayer = (player.Center - View.Center);
                     playerAwareness.SqrDistance = distanceToPlayer.sqrMagnitude;
 
-                    if (!playerAwareness.IsAware)
+                    if (playerAwareness.SqrDistance <= _playerDetectionDistance * _playerDetectionDistance)
                     {
-                        if (playerAwareness.SqrDistance <= _playerDetectionDistance * _playerDetectionDistance)
+                        Vector2 aimDirection = View.Orientation == Orientation.Left ? Vector2.left : Vector2.right;
+                        Vector2 directionToPlayer = distanceToPlayer.normalized;
+                        if (Vector2.Angle(aimDirection, directionToPlayer) < _fieldOfView / 2f)
                         {
-                            Vector2 aimDirection = View.Orientation == Orientation.Left ? Vector2.left : Vector2.right;
-                            Vector2 directionToPlayer = distanceToPlayer.normalized;
-                            if (Vector2.Angle(aimDirection, directionToPlayer) < _fieldOfView / 2f)
+                            RaycastHit2D[] hits = Physics2D.RaycastAll(View.Center, directionToPlayer,
+                                _playerDetectionDistance);
+
+                            foreach (RaycastHit2D hit in hits)
                             {
-                                RaycastHit2D[] hits = Physics2D.RaycastAll(View.Center, directionToPlayer,
-                                    _playerDetectionDistance);
-
-                                foreach (RaycastHit2D hit in hits)
+                                // Is the player
+                                if (hit.transform == player.transform)
                                 {
-                                    // Is the player
-                                    if (hit.transform == player.transform)
-                                    {
-                                        playerAwareness.IsAware = true;
-                                        break;
-                                    }
-
-                                    // Is self
-                                    if (hit.transform == View.transform) continue;
-
-                                    // Other characters won't hide the player, but platforms do
-                                    if (!hit.collider.TryGetComponent(out CharacterView _)) break;
+                                    playerAwareness.IsAware = true;
+                                    playerAwareness.CanMeleeAttack = playerAwareness.SqrDistance
+                                        <= Mathf.Pow(View.CharacterAttacks[_meleeAttackIndex].Range, 2);
+                                    playerAwareness.CanShoot = playerAwareness.SqrDistance
+                                        <= Mathf.Pow(View.CharacterAttacks[_weaponAttackIndex].Range, 2);
+                                    break;
                                 }
+
+                                // Is self
+                                if (hit.transform == View.transform) continue;
+
+                                // Other characters won't hide the player, but platforms do
+                                if (!hit.collider.TryGetComponent(out CharacterView _)) break;
                             }
                         }
                     }
@@ -131,21 +156,33 @@ namespace Mdb.EasyTrigger.Presentation.Enemy
 
             if (_playersAwareness.Any(playerAwareness => playerAwareness.Value.IsAware))
             {
-                Transform playerTransform = null;
-                float sqrDistance = 0f;
+                CharacterView targettedPlayer = null;
+                PlayerAwareness targettedPlayerAwareness = new PlayerAwareness();
 
                 foreach (CharacterView player in _level.Players)
                 {
-                    if (!_playersAwareness[player].IsAware) continue;
+                    PlayerAwareness playerAwareness = _playersAwareness[player];
+                    if (!playerAwareness.IsAware) continue;
 
-                    if (playerTransform == null || _playersAwareness[player].SqrDistance < sqrDistance)
+                    if (targettedPlayer == null || playerAwareness.SqrDistance < targettedPlayerAwareness.SqrDistance)
                     {
-                        playerTransform = player.transform;
-                        sqrDistance = _playersAwareness[player].SqrDistance;
+                        targettedPlayer = player;
+                        targettedPlayerAwareness = playerAwareness;
                     }
                 }
 
-                _followBehaviour.Target = playerTransform;
+                if (targettedPlayerAwareness.CanMeleeAttack)
+                {
+                    View.ChangeSelectedAttack(_meleeAttackIndex);
+                    View.TryAttack();
+                }
+                else if (targettedPlayerAwareness.CanShoot)
+                {
+                    View.ChangeSelectedAttack(_weaponAttackIndex);
+                    View.TryAttack();
+                }
+
+                _followBehaviour.Target = targettedPlayer.transform;
                 _currentBehaviour = _followBehaviour;
             }
             else if (_currentBehaviour == _followBehaviour)
