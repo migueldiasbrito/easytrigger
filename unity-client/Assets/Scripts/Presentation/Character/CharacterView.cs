@@ -25,13 +25,19 @@ namespace Mdb.EasyTrigger.Presentation.Character
         [SerializeField] private Rigidbody2D _rigidbody;
         [SerializeField] private Collider2D _collider;
         [SerializeField] private Animator _animator;
-        [SerializeField] private CharacterAttack[] _characterAttacks;
+        
+        [SerializeField] private Orientation _orientation = Orientation.Left;
         [SerializeField] private float _walkSpeed = 100f;
         [SerializeField] private float _jumpSpeed = 7.5f;
-        [SerializeField] private float _groundCheckDistance = 0.1f;
-        [SerializeField] private Orientation _orientation = Orientation.Left;
+        [SerializeField] private float _jumpVelocityAnimationThreshold = 2.0f;
+        [SerializeField] private float _jumpDownDuration = 0.3f;
+        
+        [SerializeField] private CharacterAttack[] _characterAttacks;
         [SerializeField] private Transform _center;
-        [SerializeField] private float _jumpDownDuration;
+
+        [SerializeField] private float _groundCheckDistance = 0.1f;
+        [SerializeField] private Transform _groundCheckLeft;
+        [SerializeField] private Transform _groundCheckRight;
 
         private IPlatformConfig _platformConfig;
         private ILevel _level;
@@ -182,9 +188,13 @@ namespace Mdb.EasyTrigger.Presentation.Character
                 groundedLayerMask |= _platformConfig.PlatformLayerMask;
             }
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, _groundCheckDistance,
+            RaycastHit2D leftHit = Physics2D.Raycast(_groundCheckLeft.position, Vector2.down, _groundCheckDistance,
                 groundedLayerMask);
-            return hit.collider != null;
+            if (leftHit.collider != null) return true;
+
+            RaycastHit2D rightHit = Physics2D.Raycast(_groundCheckRight.position, Vector2.down, _groundCheckDistance,
+                groundedLayerMask);
+            return rightHit.collider != null;
         }
 
         private void FixedUpdate()
@@ -255,8 +265,10 @@ namespace Mdb.EasyTrigger.Presentation.Character
                 }
             }
 
+            bool isJumping = !_isGrounded && _rigidbody.velocity.y > 0.0f
+                || _rigidbody.velocity.y > _jumpVelocityAnimationThreshold;
             _animator.SetBool(AnimatorUtils.Falling, !_isGrounded && _rigidbody.velocity.y < -0.0f);
-            _animator.SetBool(AnimatorUtils.Jumping, !_isGrounded && _rigidbody.velocity.y > 0.0f);
+            _animator.SetBool(AnimatorUtils.Jumping, isJumping);
 
             return hasJumped;
         }
