@@ -9,10 +9,13 @@ namespace Mdb.EasyTrigger.Level
     {
         [SerializeField] private Level[] _levels;
         [SerializeField] private AudioSource _audioSource;
-        [SerializeField] private AudioClip audioClip;
+        [SerializeField] private AudioClip _audioClip;
+        [SerializeField] private Transform _initialPosition;
 
         public ILevel CurrentLevel => _currentLevel;
         public CharacterView[] Players => _players.ToArray();
+
+        public Vector2 StartPoint => _initialPosition.position;
 
         private int _currentLevelIndex = 0;
         private Level _currentLevel;
@@ -21,7 +24,7 @@ namespace Mdb.EasyTrigger.Level
 
         public void Shoot(Vector2 point)
         {
-            _audioSource.PlayOneShot(audioClip);
+            _audioSource.PlayOneShot(_audioClip);
 
             _currentLevel.AlertEnemies(point);
         }
