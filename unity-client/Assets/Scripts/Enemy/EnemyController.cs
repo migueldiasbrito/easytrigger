@@ -47,14 +47,14 @@ namespace Mdb.EasyTrigger.Enemy
         private IEnemyBehaviour _currentBehaviour { get; set; }
         private Coroutine _inspectCoroutine = null;
 
-        public void Setup(IPlatformConfig platformConfig, ICampaign _campaign)
+        public void Setup(IPlatformConfig platformConfig, ICampaign campaign)
         {
             _platformConfig = platformConfig;
-            this._campaign = _campaign;
+            _campaign = campaign;
 
-            View.Setup(_platformConfig, this._campaign);
+            View.Setup(_platformConfig, _campaign);
 
-            foreach (CharacterView player in this._campaign.Players)
+            foreach (CharacterView player in _campaign.Players)
             {
                 _playersAwareness.Add(player, new PlayerAwareness { SqrDistance = -1.0f });
             }

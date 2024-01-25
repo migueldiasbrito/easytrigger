@@ -32,7 +32,7 @@ namespace Mdb.EasyTrigger.Level.Meta
 
             player.Setup(inputController, _platformConfig, _singlePlayerCampaign);
 
-            _singlePlayerCampaign.AddPlayers(new CharacterView[] { _playerPrefab.View });
+            _singlePlayerCampaign.AddPlayers(new CharacterView[] { player.View });
             _singlePlayerCampaign.StartCampaign();
         }
     }
