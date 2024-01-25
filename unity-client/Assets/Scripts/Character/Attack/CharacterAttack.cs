@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Mdb.EasyTrigger.Presentation.Character.Attack
+namespace Mdb.EasyTrigger.Character.Attack
 {
     public abstract class CharacterAttack : MonoBehaviour
     {

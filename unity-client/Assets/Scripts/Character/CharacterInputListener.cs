@@ -1,10 +1,10 @@
-﻿using Mdb.EasyTrigger.Presentation.Config;
-using Mdb.EasyTrigger.Presentation.Input;
-using Mdb.EasyTrigger.Presentation.Level;
+﻿using Mdb.EasyTrigger.Config;
+using Mdb.EasyTrigger.Input;
+using Mdb.EasyTrigger.Level;
 using System;
 using UnityEngine;
 
-namespace Mdb.EasyTrigger.Presentation.Character
+namespace Mdb.EasyTrigger.Character
 {
     public class CharacterInputListener : MonoBehaviour, IInputListener, IDisposable
     {

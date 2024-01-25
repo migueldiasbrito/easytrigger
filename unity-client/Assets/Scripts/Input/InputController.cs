@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Mdb.EasyTrigger.Presentation.Input
+namespace Mdb.EasyTrigger.Input
 {
     public class InputController : MonoBehaviour, IInputController
     {

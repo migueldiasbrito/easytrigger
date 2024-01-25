@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Mdb.EasyTrigger.Presentation.Enemy.Behaviours
+namespace Mdb.EasyTrigger.Enemy.Behaviour
 {
     public abstract class IPathedBehaviour : IEnemyBehaviour
     {

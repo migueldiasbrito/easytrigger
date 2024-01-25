@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Mdb.EasyTrigger.Presentation.Config
+namespace Mdb.EasyTrigger.Config
 {
     [CreateAssetMenu(fileName = "PlatformConfig", menuName = "ScriptableObjects/PlatformConfig")]
     public class PlatformConfig : ScriptableObject, IPlatformConfig

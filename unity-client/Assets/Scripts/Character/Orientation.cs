@@ -1,4 +1,4 @@
-﻿namespace Mdb.EasyTrigger.Presentation.Character
+﻿namespace Mdb.EasyTrigger.Character
 {
     public enum Orientation
     {

@@ -1,13 +1,13 @@
-﻿using Mdb.EasyTrigger.Presentation.Character;
-using Mdb.EasyTrigger.Presentation.Config;
-using Mdb.EasyTrigger.Presentation.Enemy;
-using Mdb.EasyTrigger.Presentation.Input;
-using Mdb.EasyTrigger.Presentation.Level;
+﻿using Mdb.EasyTrigger.Character;
+using Mdb.EasyTrigger.Config;
+using Mdb.EasyTrigger.Enemy;
+using Mdb.EasyTrigger.Input;
+using Mdb.EasyTrigger.Level;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Mdb.EasyTrigger.Presentation.Dev
+namespace Mdb.EasyTrigger.Dev
 {
     public class PlayerAnimationsSetup : MonoBehaviour, ILevel
     {

@@ -1,15 +1,15 @@
-﻿using Mdb.EasyTrigger.Presentation.Character;
-using Mdb.EasyTrigger.Presentation.Character.Attack;
-using Mdb.EasyTrigger.Presentation.Config;
-using Mdb.EasyTrigger.Presentation.Enemy.Behaviours;
-using Mdb.EasyTrigger.Presentation.Level;
+﻿using Mdb.EasyTrigger.Character;
+using Mdb.EasyTrigger.Character.Attack;
+using Mdb.EasyTrigger.Config;
+using Mdb.EasyTrigger.Enemy.Behaviour;
+using Mdb.EasyTrigger.Level;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Mdb.EasyTrigger.Presentation.Enemy
+namespace Mdb.EasyTrigger.Enemy
 {
     public class EnemyController : MonoBehaviour
     {

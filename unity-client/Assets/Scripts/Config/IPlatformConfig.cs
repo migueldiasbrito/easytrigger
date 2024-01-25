@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Mdb.EasyTrigger.Presentation.Config
+namespace Mdb.EasyTrigger.Config
 {
     public interface IPlatformConfig
     {

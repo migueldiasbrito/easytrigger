@@ -1,13 +1,13 @@
-﻿using Mdb.EasyTrigger.Presentation.Character.Attack;
-using Mdb.EasyTrigger.Presentation.Config;
-using Mdb.EasyTrigger.Presentation.Level;
-using Mdb.EasyTrigger.Presentation.Utils;
+﻿using Mdb.EasyTrigger.Character.Attack;
+using Mdb.EasyTrigger.Config;
+using Mdb.EasyTrigger.Level;
+using Mdb.EasyTrigger.Util;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Mdb.EasyTrigger.Presentation.Character
+namespace Mdb.EasyTrigger.Character
 {
     public class CharacterView : MonoBehaviour
     {

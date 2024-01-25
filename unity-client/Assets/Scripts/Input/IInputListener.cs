@@ -1,4 +1,4 @@
-﻿namespace Mdb.EasyTrigger.Presentation.Input
+﻿namespace Mdb.EasyTrigger.Input
 {
     public interface IInputListener
     {

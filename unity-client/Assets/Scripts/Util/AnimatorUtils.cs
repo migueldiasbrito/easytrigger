@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Mdb.EasyTrigger.Presentation.Utils
+namespace Mdb.EasyTrigger.Util
 {
     public static class AnimatorUtils
     {

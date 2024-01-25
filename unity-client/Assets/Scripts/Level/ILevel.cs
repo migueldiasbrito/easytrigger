@@ -1,7 +1,7 @@
-﻿using Mdb.EasyTrigger.Presentation.Character;
+﻿using Mdb.EasyTrigger.Character;
 using UnityEngine;
 
-namespace Mdb.EasyTrigger.Presentation.Level
+namespace Mdb.EasyTrigger.Level
 {
     public interface ILevel
     {

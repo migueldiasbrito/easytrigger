@@ -1,9 +1,9 @@
-﻿using Mdb.EasyTrigger.Presentation.Utils;
+﻿using Mdb.EasyTrigger.Util;
 using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Mdb.EasyTrigger.Presentation.Character.Attack
+namespace Mdb.EasyTrigger.Character.Attack
 {
     public class MeleeAttack : CharacterAttack
     {
