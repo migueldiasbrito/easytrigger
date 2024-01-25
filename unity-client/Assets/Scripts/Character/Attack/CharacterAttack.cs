@@ -6,6 +6,7 @@ namespace Mdb.EasyTrigger.Character.Attack
 {
     public abstract class CharacterAttack : MonoBehaviour
     {
+        [field: SerializeField] public Sprite Sprite { get; private set; }
         public abstract int AttackAnimationTrigger { get; }
         public abstract float AttackMovementSpeed { get; }
         public abstract int? TargetAnimationTrigger { get; }

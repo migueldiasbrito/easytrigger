@@ -3,6 +3,7 @@ using Mdb.EasyTrigger.Config;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Mdb.EasyTrigger.Level
 {
@@ -14,6 +15,7 @@ namespace Mdb.EasyTrigger.Level
         [SerializeField] private Transform _initialPosition;
         [SerializeField] private float _nLevelOffset;
         [SerializeField] private float _nextLevelCameraSpeed = 1f;
+        [SerializeField] private Image[] _playerAttackImages;
 
         public ILevel CurrentLevel => _currentLevel;
         public CharacterView[] Players => _players.ToArray();
@@ -89,6 +91,19 @@ namespace Mdb.EasyTrigger.Level
         public void AddPlayers(CharacterView[] players)
         {
             _players.AddRange(players);
+
+            for (int i = 0; i < _playerAttackImages.Length; i++)
+            {
+                if (i < _players.Count)
+                {
+                    _playerAttackImages[i].gameObject.SetActive(true);
+                    _players[i].SetAttackImage(_playerAttackImages[i]);
+                }
+                else
+                {
+                    _playerAttackImages[i].gameObject.SetActive(false);
+                }
+            }
         }
 
         public void Clear()

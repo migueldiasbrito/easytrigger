@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Mdb.EasyTrigger.Character
 {
@@ -40,6 +41,7 @@ namespace Mdb.EasyTrigger.Character
 
         private IPlatformConfig _platformConfig;
         private ICampaign _campaign;
+        private Image _selectedAttackImage = null;
 
 #if UNITY_EDITOR
         [SerializeField]
@@ -77,6 +79,13 @@ namespace Mdb.EasyTrigger.Character
             _campaign = campaign;
         }
 
+        public void SetAttackImage(Image selectedAttackImage)
+        {
+            _selectedAttackImage = selectedAttackImage;
+
+            _selectedAttackImage.sprite = _selectedAttack.Sprite;
+        }
+
         public void Move(float direction)
         {
             _moveDirection = direction;
@@ -107,6 +116,11 @@ namespace Mdb.EasyTrigger.Character
             if (IsDead || attackIndex < 0 || attackIndex >= CharacterAttacks.Length) return;
 
             _selectedAttackIndex = attackIndex;
+
+            if (_selectedAttackImage != null)
+            {
+                _selectedAttackImage.sprite = _selectedAttack.Sprite;
+            }
         }
 
         public void SelectNextAttack()
@@ -119,7 +133,7 @@ namespace Mdb.EasyTrigger.Character
             }
             else
             {
-                _selectedAttackIndex = (_selectedAttackIndex + 1) % CharacterAttacks.Length;
+                ChangeSelectedAttack((_selectedAttackIndex + 1) % CharacterAttacks.Length);
             }
         }
 
@@ -133,7 +147,7 @@ namespace Mdb.EasyTrigger.Character
             }
             else
             {
-                _selectedAttackIndex = (_selectedAttackIndex - 1 + CharacterAttacks.Length) % CharacterAttacks.Length;
+                ChangeSelectedAttack((_selectedAttackIndex - 1 + CharacterAttacks.Length) % CharacterAttacks.Length);
             }
         }
 

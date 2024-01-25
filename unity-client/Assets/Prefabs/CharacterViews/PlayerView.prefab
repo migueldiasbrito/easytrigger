@@ -135,6 +135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f2b354b7a833bc46b579c66c9175bb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Sprite>k__BackingField: {fileID: 21300004, guid: 88d2efa31ca3e814d976be5f52978125,
+    type: 3}
   _recoil: 0.5
   _range: 2.5
   _audioClip: {fileID: 8300000, guid: ae203429a5a07a347bd8455ca601ba58, type: 3}
@@ -212,6 +214,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad3e8982040aaaa46890b8ce37808f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Sprite>k__BackingField: {fileID: 21300002, guid: 88d2efa31ca3e814d976be5f52978125,
+    type: 3}
   _duration: 0.5
   _collider: {fileID: 2319844124124589470}
   _attackMovementSpeed: 25
