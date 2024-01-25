@@ -73,7 +73,7 @@ namespace Mdb.EasyTrigger.Level
 
                 yield return new WaitForEndOfFrame();
 
-                totalTime += Time.deltaTime;
+                totalTime += _nextLevelCameraSpeed * Time.deltaTime;
 
                 if (totalTime >= 1)
                 {

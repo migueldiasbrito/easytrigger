@@ -12,8 +12,6 @@ namespace Mdb.EasyTrigger.Level
     {
         [SerializeField] public List<EnemyController> _enemies;
         [field: SerializeField] public Collider2D PlatformCollider { get; private set; }
-        [SerializeField] private Collider2D _leftBarrier;
-        [SerializeField] private Collider2D _righttBarrier;
 
         public CharacterView[] Enemies => _enemies.Select(enemy => enemy.View).ToArray();
 
