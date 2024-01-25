@@ -2,6 +2,7 @@
 using Mdb.EasyTrigger.Config;
 using Mdb.EasyTrigger.Level;
 using Mdb.EasyTrigger.Util;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,6 +67,8 @@ namespace Mdb.EasyTrigger.Character
         private CharacterView[] Enemies => _campaign.CurrentLevel.Enemies;
         private CharacterView _currentTarget => Enemies[_currentTargetIndex.Value];
 
+        private Action _onDeathCallback = null;
+
 #if UNITY_EDITOR
         [SerializeField] private Vector2 _velocity;
         [SerializeField]
@@ -84,6 +87,11 @@ namespace Mdb.EasyTrigger.Character
             _selectedAttackImage = selectedAttackImage;
 
             _selectedAttackImage.sprite = _selectedAttack.Sprite;
+        }
+
+        public void SetOnDeathCallback(Action onDeathCallback)
+        {
+            _onDeathCallback = onDeathCallback;
         }
 
         public void Move(float direction)
@@ -186,6 +194,8 @@ namespace Mdb.EasyTrigger.Character
             _animator.SetBool(AnimatorUtils.PlayerTargeting, false);
             _animator.SetBool(AnimatorUtils.InRange, false);
             _animator.SetBool(AnimatorUtils.Targeted, false);
+
+            _onDeathCallback?.Invoke();
         }
 
         private IEnumerator OnKilled()
