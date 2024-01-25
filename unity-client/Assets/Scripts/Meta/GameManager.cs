@@ -12,13 +12,14 @@ namespace Mdb.EasyTrigger.Level.Meta
         [SerializeField] private CharacterInputListener _playerPrefab;
         [SerializeField] private InputController _inputControllerPrefab;
         [SerializeField] private Campaign _singlePlayerCampaign;
+        [SerializeField] private Transform _cameraTransform;
 
         private List<CharacterInputListener> _players = new List<CharacterInputListener>();
         private List<InputController> _inputControllers = new List<InputController>();
 
         private void Start()
         {
-            _singlePlayerCampaign.Setup(_platformConfig);
+            _singlePlayerCampaign.Setup(_platformConfig, _cameraTransform);
             StartSinglePlayerCampaign();
         }
 
