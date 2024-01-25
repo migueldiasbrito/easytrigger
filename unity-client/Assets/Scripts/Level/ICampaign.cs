@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Mdb.EasyTrigger.Level
 {
-    public interface IGameManager
+    public interface ICampaign
     {
         ILevel CurrentLevel { get; }
         CharacterView[] Players { get; }

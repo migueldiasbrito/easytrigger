@@ -33,7 +33,7 @@ namespace Mdb.EasyTrigger.Enemy
         [SerializeField] private float _fieldOfView = 60f;
 
         private IPlatformConfig _platformConfig;
-        private IGameManager _gameManager;
+        private ICampaign _campaign;
 
         private Dictionary<CharacterView, PlayerAwareness> _playersAwareness
             = new Dictionary<CharacterView, PlayerAwareness>();
@@ -44,14 +44,14 @@ namespace Mdb.EasyTrigger.Enemy
         private IEnemyBehaviour _currentBehaviour { get; set; }
         private Coroutine _inspectCoroutine = null;
 
-        public void Setup(IPlatformConfig platformConfig, IGameManager gameManager)
+        public void Setup(IPlatformConfig platformConfig, ICampaign _campaign)
         {
             _platformConfig = platformConfig;
-            _gameManager = gameManager;
+            this._campaign = _campaign;
 
-            View.Setup(_platformConfig, _gameManager);
+            View.Setup(_platformConfig, this._campaign);
 
-            foreach (CharacterView player in _gameManager.Players)
+            foreach (CharacterView player in this._campaign.Players)
             {
                 _playersAwareness.Add(player, new PlayerAwareness { SqrDistance = -1.0f });
             }
@@ -117,9 +117,9 @@ namespace Mdb.EasyTrigger.Enemy
             Debug.DrawLine(View.Center, topFov);
             Debug.DrawLine(View.Center, bottomFov);
 #endif
-            if (_gameManager == null) return;
+            if (_campaign == null) return;
 
-            foreach (CharacterView player in _gameManager.Players)
+            foreach (CharacterView player in _campaign.Players)
             {
                 PlayerAwareness playerAwareness = _playersAwareness[player];
 
@@ -181,7 +181,7 @@ namespace Mdb.EasyTrigger.Enemy
                 CharacterView targettedPlayer = null;
                 PlayerAwareness targettedPlayerAwareness = new PlayerAwareness();
 
-                foreach (CharacterView player in _gameManager.Players)
+                foreach (CharacterView player in _campaign.Players)
                 {
                     PlayerAwareness playerAwareness = _playersAwareness[player];
                     if (!playerAwareness.IsAware) continue;

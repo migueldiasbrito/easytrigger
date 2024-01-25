@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Mdb.EasyTrigger.Dev
 {
-    public class PlayerAnimationsSetup : MonoBehaviour, IGameManager, ILevel
+    public class PlayerAnimationsSetup : MonoBehaviour, ICampaign, ILevel
     {
         [SerializeField] private InputController _inputController;
         [SerializeField] private CharacterInputListener _characterController;

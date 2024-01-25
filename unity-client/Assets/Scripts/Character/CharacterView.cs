@@ -39,7 +39,7 @@ namespace Mdb.EasyTrigger.Character
         [SerializeField] private Transform _groundCheckRight;
 
         private IPlatformConfig _platformConfig;
-        private IGameManager _gameManager;
+        private ICampaign _campaign;
 
 #if UNITY_EDITOR
         [SerializeField]
@@ -61,7 +61,7 @@ namespace Mdb.EasyTrigger.Character
             new Dictionary<CharacterView, TargetingStatus>();
 
         private CharacterAttack _selectedAttack => CharacterAttacks[_selectedAttackIndex];
-        private CharacterView[] Enemies => _gameManager.CurrentLevel.Enemies;
+        private CharacterView[] Enemies => _campaign.CurrentLevel.Enemies;
         private CharacterView _currentTarget => Enemies[_currentTargetIndex.Value];
 
 #if UNITY_EDITOR
@@ -71,10 +71,10 @@ namespace Mdb.EasyTrigger.Character
         private bool _isGrounded;
         private bool _jumpingDown = false;
 
-        public void Setup(IPlatformConfig platformConfig, IGameManager gameManager)
+        public void Setup(IPlatformConfig platformConfig, ICampaign campaign)
         {
             _platformConfig = platformConfig;
-            _gameManager = gameManager;
+            _campaign = campaign;
         }
 
         public void Move(float direction)
@@ -298,7 +298,7 @@ namespace Mdb.EasyTrigger.Character
 
                     if (_selectedAttack.MakesSound)
                     {
-                        _gameManager.Shoot(transform.position);
+                        _campaign.Shoot(transform.position);
                     }
                 }
             }
@@ -316,7 +316,7 @@ namespace Mdb.EasyTrigger.Character
 
         private IEnumerator JumpingDown()
         {
-            Collider2D platformCollider = _gameManager.CurrentLevel.PlatformCollider;
+            Collider2D platformCollider = _campaign.CurrentLevel.PlatformCollider;
             _jumpingDown = true;
             Physics2D.IgnoreCollision(_collider, platformCollider);
             yield return new WaitForSeconds(_jumpDownDuration);

@@ -12,7 +12,7 @@ namespace Mdb.EasyTrigger.Character
 
         private IInputController _inputController;
         private IPlatformConfig _platformConfig;
-        private IGameManager _gameManager;
+        private ICampaign _campaign;
 
         public void OnMove(float axisValue)
         {
@@ -70,15 +70,15 @@ namespace Mdb.EasyTrigger.Character
             _inputController.Unsubscribe(this);
         }
 
-        public void Setup(IInputController inputController, IPlatformConfig platformConfig, IGameManager gameManager)
+        public void Setup(IInputController inputController, IPlatformConfig platformConfig, ICampaign campaign)
         {
             _inputController = inputController;
             _platformConfig = platformConfig;
-            _gameManager = gameManager;
+            _campaign = campaign;
 
             _inputController.Subscribe(this);
 
-            View.Setup(_platformConfig, _gameManager);
+            View.Setup(_platformConfig, _campaign);
         }
     }
 }
