@@ -29,6 +29,9 @@ namespace Mdb.EasyTrigger.Enemy
         [SerializeField] private float _platformToleranceDistance = 5f;
         [SerializeField] private float _inspectTime = 10f;
 
+        [SerializeField] private Transform _canJumpDetectPoint;
+        [SerializeField] private Transform _canFallDownDetectPoint;
+
         [SerializeField] private float _playerDetectionDistance = 10f;
         [SerializeField] private float _fieldOfView = 60f;
 
@@ -245,8 +248,11 @@ namespace Mdb.EasyTrigger.Enemy
             {
                 if (nextPoint.Value.y > currentPosition.y)
                 {
-                    RaycastHit2D hit = Physics2D.Raycast(View.transform.position, Vector2.up, _platformToleranceDistance,
-                        _platformConfig.PlatformLayerMask);
+                    Vector2 detectStartPoint = _canJumpDetectPoint.position;
+                    Vector2 jumpDirection = Vector2.up +
+                        (View.Orientation == Orientation.Left ? Vector2.left : Vector2.right);
+                    RaycastHit2D hit = Physics2D.Raycast(detectStartPoint, jumpDirection, _platformToleranceDistance,
+                        _platformConfig.GroundLayerMask | _platformConfig.PlatformLayerMask);
 
                     if (hit.collider != null)
                     {
@@ -255,7 +261,8 @@ namespace Mdb.EasyTrigger.Enemy
                 }
                 else
                 {
-                    RaycastHit2D hit = Physics2D.Raycast(View.transform.position, Vector2.up, _platformToleranceDistance,
+                    Vector2 detectStartPoint = _canFallDownDetectPoint.position;
+                    RaycastHit2D hit = Physics2D.Raycast(detectStartPoint, Vector2.down, _platformToleranceDistance,
                         _platformConfig.GroundLayerMask | _platformConfig.PlatformLayerMask);
 
                     if (hit.collider != null)
