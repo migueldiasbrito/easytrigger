@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Mdb.EasyTrigger.Dev
 {
-    public class PlayerAnimationsSetup : MonoBehaviour, ILevel
+    public class PlayerAnimationsSetup : MonoBehaviour, IGameManager, ILevel
     {
         [SerializeField] private InputController _inputController;
         [SerializeField] private CharacterInputListener _characterController;
@@ -20,9 +20,10 @@ namespace Mdb.EasyTrigger.Dev
 
         [SerializeField] private LayerMask _charactersLayerMask;
 
+        public ILevel CurrentLevel => this;
         public CharacterView[] Players => new CharacterView[] { _characterController.View };
         public CharacterView[] Enemies => _enemies.Select(enemy => enemy.View).ToArray();
-        [field: SerializeField] public Collider2D PlaftformCollider { get; private set; }
+        [field: SerializeField] public Collider2D PlatformCollider { get; private set; }
 
         public void Shoot(Vector2 point)
         {

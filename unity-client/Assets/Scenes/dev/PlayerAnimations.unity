@@ -2249,7 +2249,7 @@ MonoBehaviour:
   _charactersLayerMask:
     serializedVersion: 2
     m_Bits: 1024
-  <PlaftformCollider>k__BackingField: {fileID: 1521870086}
+  <PlatformCollider>k__BackingField: {fileID: 1521870086}
 --- !u!4 &1858558403
 Transform:
   m_ObjectHideFlags: 0
