@@ -57,7 +57,7 @@ MonoBehaviour:
   _inspectTime: 10
   _canJumpDetectPoint: {fileID: 5395336787343328607}
   _canFallDownDetectPoint: {fileID: 6929311403292342806}
-  _playerDetectionDistance: 5
+  _playerDetectionDistance: 4.5
   _fieldOfView: 15
 --- !u!114 &6271340637399543867
 MonoBehaviour:

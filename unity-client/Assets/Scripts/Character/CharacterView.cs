@@ -396,7 +396,7 @@ namespace Mdb.EasyTrigger.Character
             if (_targeting)
             {
                 List<int> enemiesInTarget = new List<int>();
-                int currentTargetIndex = -1;
+                int currentTargetIndex = 0;
 
                 for (int i = 0; i < Enemies.Length; i++)
                 {

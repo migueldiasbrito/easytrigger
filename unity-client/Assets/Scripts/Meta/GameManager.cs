@@ -66,7 +66,7 @@ namespace Mdb.EasyTrigger.Level.Meta
 
         private void StartMultiPlayerCampaign()
         {
-            _waitForPlayersText.text = "Waiting for players... (0 / 2)";
+            _waitForPlayersText.text = "Waiting for players... (0 / 2)\nPress any key to join";
             _waitForPlayersCanvas.gameObject.SetActive(true);
             _playerInputManager.EnableJoining();
 
@@ -102,7 +102,7 @@ namespace Mdb.EasyTrigger.Level.Meta
         public void OnPlayerJoined(PlayerInput newPlayer)
         {
             _inputControllers.Add(newPlayer.GetComponent<InputController>());
-            _waitForPlayersText.text = $"Waiting for players... ({_inputControllers.Count} / 2)";
+            _waitForPlayersText.text = $"Waiting for players... ({_inputControllers.Count} / 2)\nPress any key to join";
 
             if (_inputControllers.Count >= 2)
             {
@@ -127,6 +127,9 @@ namespace Mdb.EasyTrigger.Level.Meta
 
             _singlePlayerCampaign.Setup(_platformConfig, _cameraTransform, OnWin, OnGameOver);
             _multiPlayerCampaign.Setup(_platformConfig, _cameraTransform, OnWin, OnGameOver);
+            
+            int charactersLayer = _playerPrefab.View.gameObject.layer;
+            Physics2D.IgnoreLayerCollision(charactersLayer, charactersLayer);
         }
 
         private void OnGameOver()
