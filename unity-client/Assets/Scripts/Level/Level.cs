@@ -33,7 +33,12 @@ namespace Mdb.EasyTrigger.Level
 
             _onLevelComplete = onLevelComplete;
 
-            _enemies.ForEach(enemie => enemie.Setup(_platformConfig, _campaign));
+            _enemies.ForEach(enemy => enemy.Setup(_platformConfig, _campaign));
+        }
+
+        public void PlayersAdded()
+        {
+            _enemies.ForEach(enemy => enemy.PlayersAdded());
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

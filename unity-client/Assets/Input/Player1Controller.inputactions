@@ -190,6 +190,39 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "D-Pad Keys [Logitech Cordless RumblePad2]",
+                    "id": "4def7171-d2f5-4b17-aae8-7e10cdf40e5d",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "a2677823-d8f7-4fe7-bdd0-73e2ebee6e27",
+                    "path": "<HID::Logitech Logitech Cordless RumblePad 2>/hat/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Logitech Cordless RumblePad 2",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "7360eac5-95f2-431f-83ec-f2f0841cdfe3",
+                    "path": "<HID::Logitech Logitech Cordless RumblePad 2>/hat/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Logitech Cordless RumblePad 2",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "95d0de6b-fb50-417f-8425-0b4e12d77d47",
                     "path": "<Keyboard>/space",
@@ -207,6 +240,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a9d03408-fd00-423c-8c98-9b0631adbedd",
+                    "path": "<HID::Logitech Logitech Cordless RumblePad 2>/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Logitech Cordless RumblePad 2",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -235,6 +279,17 @@
                 },
                 {
                     "name": "",
+                    "id": "fc5b14b1-05be-46f5-902d-d55577be4c8e",
+                    "path": "<HID::Logitech Logitech Cordless RumblePad 2>/button8",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Logitech Cordless RumblePad 2",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "f6315368-43ac-4364-ae90-3a1cd1a4538a",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
@@ -250,7 +305,18 @@
                     "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamepad",
+                    "action": "Target",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0bec0d16-fd78-4fdb-97ed-2665a9eace63",
+                    "path": "<HID::Logitech Logitech Cordless RumblePad 2>/button7",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Logitech Cordless RumblePad 2",
                     "action": "Target",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -305,7 +371,7 @@
                     "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamepad",
                     "action": "ScrollAttacks",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -316,7 +382,40 @@
                     "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
+                    "groups": "Gamepad",
+                    "action": "ScrollAttacks",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Shoulders [Logitech Cordless RumblePad2]",
+                    "id": "ef8f355f-c662-4f60-8180-2a3ffa0b219c",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
                     "groups": "",
+                    "action": "ScrollAttacks",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "2bc04d78-24b5-4214-a007-63a92c8624c3",
+                    "path": "<HID::Logitech Logitech Cordless RumblePad 2>/button5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Logitech Cordless RumblePad 2",
+                    "action": "ScrollAttacks",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "e82bda41-5156-4a72-8313-3116ec192cdc",
+                    "path": "<HID::Logitech Logitech Cordless RumblePad 2>/button6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Logitech Cordless RumblePad 2",
                     "action": "ScrollAttacks",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -338,7 +437,18 @@
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamepad",
+                    "action": "JumpDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fd4a83b7-cfb2-4fd5-98ba-4db2d856c51a",
+                    "path": "<HID::Logitech Logitech Cordless RumblePad 2>/button3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Logitech Cordless RumblePad 2",
                     "action": "JumpDown",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -369,6 +479,17 @@
             "devices": [
                 {
                     "devicePath": "<Gamepad>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Logitech Cordless RumblePad 2",
+            "bindingGroup": "Logitech Cordless RumblePad 2",
+            "devices": [
+                {
+                    "devicePath": "<HID::Logitech Logitech Cordless RumblePad 2>",
                     "isOptional": false,
                     "isOR": false
                 }

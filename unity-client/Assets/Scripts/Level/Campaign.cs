@@ -14,7 +14,7 @@ namespace Mdb.EasyTrigger.Level
         [SerializeField] private Level[] _levels;
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private AudioClip _audioClip;
-        [SerializeField] private Transform _initialPosition;
+        [SerializeField] private Transform[] _initialPositions;
         [SerializeField] private float _nLevelOffset;
         [SerializeField] private float _nextLevelCameraSpeed = 1f;
         [SerializeField] private Canvas _canvas;
@@ -23,7 +23,7 @@ namespace Mdb.EasyTrigger.Level
         public ILevel CurrentLevel => _currentLevel;
         public CharacterView[] Players => _players.ToArray();
 
-        public Vector2 StartPoint => _initialPosition.position;
+        public Vector3[] StartPoints => _initialPositions.Select(transform => transform.position).ToArray();
 
         private IPlatformConfig _platformConfig;
 
@@ -121,14 +121,16 @@ namespace Mdb.EasyTrigger.Level
                     _playerAttackImages[i].gameObject.SetActive(false);
                 }
             }
+
+            if (_currentLevel != null)
+            {
+                _currentLevel.PlayersAdded();
+            }
         }
 
         private void OnPlayerDeath()
         {
-            if (_players.All(player => player.IsDead))
-            {
-                _onGameOver();
-            }
+            _onGameOver();
         }
 
         public void Clear()

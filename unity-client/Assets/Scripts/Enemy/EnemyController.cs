@@ -60,6 +60,17 @@ namespace Mdb.EasyTrigger.Enemy
             }
         }
 
+        public void PlayersAdded()
+        {
+            foreach (CharacterView player in _campaign.Players)
+            {
+                if (!_playersAwareness.TryGetValue(player, out PlayerAwareness _))
+                {
+                    _playersAwareness.Add(player, new PlayerAwareness { SqrDistance = -1.0f });
+                }
+            }
+        }
+
         public void AddPointOfInterest(Vector2 inspectPoint)
         {
             if (_currentBehaviour == _followBehaviour) return;
