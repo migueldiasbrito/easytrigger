@@ -19,6 +19,7 @@ namespace Mdb.EasyTrigger.Level
         private IPlatformConfig _platformConfig;
 
         private Action _onLevelComplete;
+        private bool _levelComplete = false;
         private List<CharacterView> _characterWaitingForNextLevel = new List<CharacterView>();
 
         public void AlertEnemies(Vector2 position)
@@ -43,6 +44,8 @@ namespace Mdb.EasyTrigger.Level
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            if (_levelComplete) return;
+
             if (collision.TryGetComponent(out CharacterView character))
             {
                 _characterWaitingForNextLevel.Add(character);
@@ -50,6 +53,7 @@ namespace Mdb.EasyTrigger.Level
                 if (_enemies.All(enemy => enemy.View.IsDead) &&
                     _campaign.Players.All(player => _characterWaitingForNextLevel.Contains(player)))
                 {
+                    _levelComplete = true;
                     _onLevelComplete.Invoke();
                 }
             }
